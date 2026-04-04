@@ -866,7 +866,7 @@ async function testConnection() {
       showDebug('LOAD FAILED - Could not read back saved value.\nLoad result: ' + JSON.stringify(loadResult).substring(0, 300));
     }
   } catch(err) {
-    showDebug('CONNECTION ERROR:\n' + err.message + '\n\nThis means the API function is not running.\nCheck Netlify Functions are deployed correctly.');
+    showDebug('CONNECTION ERROR:\n' + err.message + '\n\nThe API is not reachable.\nMake sure DATABASE_URL is set in Vercel Environment Variables and the site has been redeployed.');
   }
 }
 
