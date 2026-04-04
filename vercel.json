@@ -1,16 +1,30 @@
 {
-  "rewrites": [
-    { "source": "/api/:path*", "destination": "/api/:path*" },
-    { "source": "/(.*)", "destination": "/$1" }
-  ],
-  "headers": [
-    {
-      "source": "/api/(.*)",
-      "headers": [
-        { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "Access-Control-Allow-Methods", "value": "GET,POST,DELETE,OPTIONS" },
-        { "key": "Access-Control-Allow-Headers", "value": "Content-Type" }
-      ]
+  "version": 2,
+  "functions": {
+    "api/index.js": {
+      "memory": 256,
+      "maxDuration": 10
+    },
+    "api/contact.js": {
+      "memory": 128,
+      "maxDuration": 5
     }
+  },
+  "routes": [
+    { "src": "/api/load", "dest": "/api/index.js" },
+    { "src": "/api/save-all-content", "dest": "/api/index.js" },
+    { "src": "/api/cloudinary-sign", "dest": "/api/index.js" },
+    { "src": "/api/save-media", "dest": "/api/index.js" },
+    { "src": "/api/gallery", "dest": "/api/index.js" },
+    { "src": "/api/gallery/(.*)", "dest": "/api/index.js" },
+    { "src": "/api/blog", "dest": "/api/index.js" },
+    { "src": "/api/blog/(.*)", "dest": "/api/index.js" },
+    { "src": "/api/contact", "dest": "/api/contact.js" },
+    { "src": "/admin.html", "dest": "/admin.html" },
+    { "src": "/admin", "dest": "/admin.html" },
+    { "src": "/sitemap.xml", "dest": "/sitemap.xml" },
+    { "src": "/robots.txt", "dest": "/robots.txt" },
+    { "src": "/", "dest": "/index.html" },
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
