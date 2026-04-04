@@ -695,17 +695,33 @@ function revealPage() {
 }
 
 window.addEventListener('load', () => {
+  // Animate loader name letters
   const spans = document.querySelectorAll('.loader-name span');
   spans.forEach((s, i) => setTimeout(() => {
     s.style.transition = `transform .6s cubic-bezier(.16,1,.3,1) ${i*.08}s, opacity .5s ${i*.08}s`;
     s.style.transform = 'translateY(0)'; s.style.opacity = '1';
   }, 100));
 
-  // ALWAYS reveal page after 2.5s no matter what — DB loads in background
-  setTimeout(() => revealPage(), 2500);
+  // Load DB first, then reveal — with 4s hard timeout as safety net
+  let revealed = false;
+  function doReveal() {
+    if (revealed) return;
+    revealed = true;
+    revealPage();
+  }
 
-  // Also try to load DB in background — if it works, content updates live
-  loadDB().catch(() => console.log('DB unavailable, showing defaults'));
+  // Safety net — always reveal after 4 seconds no matter what
+  const safetyTimer = setTimeout(doReveal, 4000);
+
+  // Try to load DB — reveal as soon as it finishes
+  loadDB().then(() => {
+    clearTimeout(safetyTimer);
+    // Small delay so content is painted before reveal animation
+    setTimeout(doReveal, 300);
+  }).catch(() => {
+    clearTimeout(safetyTimer);
+    doReveal();
+  });
 });
 
 /* ══ NAV APPEAR ══ */
@@ -1034,13 +1050,48 @@ async function publishPost(){
 /* ══ LOAD FROM DB ══ */
 async function loadDB(){
   try{
-    const d=await api('/load');
-    if(d.content)Object.entries(d.content).forEach(([id,v])=>{const el=document.getElementById(id);if(el)el.innerHTML=v;});
-    if(d.media)d.media.forEach(m=>applyMedia(m.section,m.slot_key,m.url,m.resource_type));
-    if(d.gallery)galleryData=d.gallery.map(i=>({id:i.id,category:i.category,url:i.url,resource_type:i.resource_type,caption:i.caption||''}));
-    if(d.posts&&d.posts.length)blogPosts=d.posts.map(p=>({id:p.id,date:p.post_date,cat:p.category,title:p.title,excerpt:p.excerpt,content:p.content}));
+    console.log('Loading from DB...');
+    const d = await api('/load');
+    console.log('DB response:', d);
+
+    // Apply text content to all elements
+    if(d.content && Object.keys(d.content).length > 0){
+      Object.entries(d.content).forEach(([id,v])=>{
+        const el = document.getElementById(id);
+        if(el && v){
+          el.innerHTML = v;
+          console.log('Applied:', id);
+        }
+      });
+    }
+
+    // Apply media (hero image, about photo, project media)
+    if(d.media && d.media.length > 0){
+      d.media.forEach(m => applyMedia(m.section, m.slot_key, m.url, m.resource_type));
+    }
+
+    // Apply gallery data
+    if(d.gallery){
+      galleryData = d.gallery.map(i=>({
+        id:i.id, category:i.category, url:i.url,
+        resource_type:i.resource_type, caption:i.caption||''
+      }));
+    }
+
+    // Apply blog posts
+    if(d.posts && d.posts.length > 0){
+      blogPosts = d.posts.map(p=>({
+        id:p.id, date:p.post_date, cat:p.category,
+        title:p.title, excerpt:p.excerpt, content:p.content
+      }));
+    }
+
     renderBlog();
-  }catch(err){console.log('Using defaults');renderBlog();}
+    console.log('DB load complete!');
+  } catch(err){
+    console.error('DB load failed:', err);
+    renderBlog();
+  }
 }
 
 /* ══ CLOSE MODALS ══ */
