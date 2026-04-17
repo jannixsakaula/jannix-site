@@ -370,6 +370,9 @@ footer{background:var(--charcoal);padding:72px 64px 44px;}
 <div class="upload-toast" id="uploadToast"></div>
 <input type="file" id="gfi" accept="image/*,video/*"/>
 <div class="save-toast" id="saveToast"></div>
+<div id="dbDebugBanner" style="position:fixed;bottom:0;left:0;right:0;background:#0D1B4B;color:#C9A84C;font-family:monospace;font-size:11px;padding:6px 12px;z-index:99999;display:block;border-top:1px solid rgba(201,168,76,.3)">
+  Loading site data...
+</div>
 <div class="edit-banner" id="editBanner">✎ Edit Mode — Click any text to edit <button class="save-btn" onclick="saveAll()">Save All Changes</button></div>
 
 <!-- ADMIN LOGIN -->
@@ -1049,21 +1052,33 @@ async function publishPost(){
 
 /* ══ LOAD FROM DB ══ */
 async function loadDB(){
+  const dbg = document.getElementById('dbDebugBanner');
   try{
-    console.log('Loading from DB...');
+    if(dbg) dbg.textContent = 'Connecting to database...';
     const d = await api('/load');
-    console.log('DB response:', d);
+
+    if(!d || d.error) {
+      if(dbg) dbg.textContent = 'DB Error: ' + (d && d.error ? d.error : 'Unknown error');
+      return;
+    }
+
+    const keyCount = d.content ? Object.keys(d.content).length : 0;
+    if(dbg) dbg.textContent = 'DB connected! Keys: ' + keyCount + ' | Applying content...';
 
     // Apply text content to all elements
-    if(d.content && Object.keys(d.content).length > 0){
+    let applied = 0;
+    if(d.content && keyCount > 0){
       Object.entries(d.content).forEach(([id,v])=>{
         const el = document.getElementById(id);
-        if(el && v){
+        if(el && v && !id.startsWith('_')){
           el.innerHTML = v;
-          console.log('Applied:', id);
+          applied++;
         }
       });
     }
+
+    if(dbg) dbg.textContent = 'Applied ' + applied + ' content items from DB. Keys in DB: ' + keyCount;
+    setTimeout(() => { if(dbg) dbg.style.display = 'none'; }, 5000);
 
     // Apply media (hero image, about photo, project media)
     if(d.media && d.media.length > 0){
@@ -1089,6 +1104,8 @@ async function loadDB(){
     renderBlog();
     console.log('DB load complete!');
   } catch(err){
+    const dbg = document.getElementById('dbDebugBanner');
+    if(dbg) dbg.textContent = 'DB Error: ' + err.message + ' — Check Vercel logs';
     console.error('DB load failed:', err);
     renderBlog();
   }
