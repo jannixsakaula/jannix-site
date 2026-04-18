@@ -370,9 +370,7 @@ footer{background:var(--charcoal);padding:72px 64px 44px;}
 <div class="upload-toast" id="uploadToast"></div>
 <input type="file" id="gfi" accept="image/*,video/*"/>
 <div class="save-toast" id="saveToast"></div>
-<div id="dbDebugBanner" style="position:fixed;bottom:0;left:0;right:0;background:#0D1B4B;color:#C9A84C;font-family:monospace;font-size:11px;padding:6px 12px;z-index:99999;display:block;border-top:1px solid rgba(201,168,76,.3)">
-  Loading site data... (if this stays, the API is unreachable — check Vercel logs)
-</div>
+
 <div class="edit-banner" id="editBanner">✎ Edit Mode — Click any text to edit <button class="save-btn" onclick="saveAll()">Save All Changes</button></div>
 
 <!-- ADMIN LOGIN -->
@@ -833,25 +831,18 @@ async function api(path,method='GET',body=null){
   const o={method,headers:{'Content-Type':'application/json'}};
   if(body)o.body=JSON.stringify(body);
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 8000);
-  // Try /api/index path first (Vercel), then /api as fallback
-  const urls = ['/api/index' + path, '/api' + path];
-  for(const url of urls){
-    try {
-      const r = await fetch(url, {...o, signal: controller.signal});
-      if(r.ok || r.status < 500){
-        clearTimeout(timer);
-        return r.json();
-      }
-    } catch(e) {
-      if(e.name === 'AbortError'){
-        clearTimeout(timer);
-        throw new Error('API timeout');
-      }
-    }
+  const timer = setTimeout(() => controller.abort(), 10000);
+  try {
+    // Use the exact URL that we know works
+    const r = await fetch('/api' + path, {...o, signal: controller.signal});
+    clearTimeout(timer);
+    const text = await r.text();
+    try { return JSON.parse(text); }
+    catch(e) { throw new Error('Bad JSON response: ' + text.substring(0,100)); }
+  } catch(e) {
+    clearTimeout(timer);
+    throw e;
   }
-  clearTimeout(timer);
-  throw new Error('All API endpoints failed');
 }
 
 /* ══ CLOUDINARY ══ */
@@ -1070,33 +1061,18 @@ async function publishPost(){
 
 /* ══ LOAD FROM DB ══ */
 async function loadDB(){
-  const dbg = document.getElementById('dbDebugBanner');
   try{
-    if(dbg) dbg.textContent = 'Connecting to database...';
     const d = await api('/load');
+    if(!d || d.error) return;
 
-    if(!d || d.error) {
-      if(dbg) dbg.textContent = 'DB Error: ' + (d && d.error ? d.error : 'Unknown error');
-      return;
-    }
-
-    const keyCount = d.content ? Object.keys(d.content).length : 0;
-    if(dbg) dbg.textContent = 'DB connected! Keys: ' + keyCount + ' | Applying content...';
-
-    // Apply text content to all elements
-    let applied = 0;
-    if(d.content && keyCount > 0){
+    // Apply all text content
+    if(d.content){
       Object.entries(d.content).forEach(([id,v])=>{
+        if(id.startsWith('_')) return;
         const el = document.getElementById(id);
-        if(el && v && !id.startsWith('_')){
-          el.innerHTML = v;
-          applied++;
-        }
+        if(el && v) el.innerHTML = v;
       });
     }
-
-    if(dbg) dbg.textContent = 'Applied ' + applied + ' content items from DB. Keys in DB: ' + keyCount;
-    setTimeout(() => { if(dbg) dbg.style.display = 'none'; }, 5000);
 
     // Apply media (hero image, about photo, project media)
     if(d.media && d.media.length > 0){
@@ -1122,9 +1098,7 @@ async function loadDB(){
     renderBlog();
     console.log('DB load complete!');
   } catch(err){
-    const dbg = document.getElementById('dbDebugBanner');
-    if(dbg) dbg.textContent = 'DB Error: ' + err.message + ' — Check Vercel logs';
-    console.error('DB load failed:', err);
+    console.error('DB load failed:', err.message);
     renderBlog();
   }
 }
