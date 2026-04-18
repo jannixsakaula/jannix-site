@@ -681,190 +681,127 @@ footer{background:var(--charcoal);padding:72px 64px 44px;}
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-const CLOUD = 'dgsi6tlxe';
-const PASS = 'Sakaula@2008';
-const EIDS = ['heroEyebrow','heroTagline','aboutP1','aboutP2','aboutP3','elevareIntro','svc1name','svc1desc','svc2name','svc2desc','svc3name','svc3desc','svc4name','svc4desc','advTitle','advDesc','contactIntro','contactEmail','contactLoc','contactSocial','footQuote','socialIG','socialLI','socialTT','pcat0','ptitle0','pcap0','pcat1','ptitle1','pcap1','pcat2','ptitle2','pcap2','pcat3','ptitle3','pcap3','pcat4','ptitle4','pcap4'];
+<script>
+const CLOUD='dgsi6tlxe';
+const PASS='Sakaula@2008';
 
-/* ══ LOADER ══ */
-function revealPage() {
-  const l = document.getElementById('pageLoader');
-  if (!l || l.style.display === 'none') return;
-  l.style.transition = 'opacity .8s, transform .8s cubic-bezier(.16,1,.3,1)';
-  l.style.opacity = '0'; l.style.transform = 'translateY(-20px)';
-  setTimeout(() => { l.style.display = 'none'; initAnimations(); }, 800);
+/* ── LOADER ── */
+function revealPage(){
+  const l=document.getElementById('pageLoader');
+  if(!l||l.style.display==='none')return;
+  l.style.transition='opacity .8s,transform .8s cubic-bezier(.16,1,.3,1)';
+  l.style.opacity='0';l.style.transform='translateY(-20px)';
+  setTimeout(()=>{l.style.display='none';initAnimations();},800);
 }
 
-window.addEventListener('load', () => {
-  // Animate loader name letters
-  const spans = document.querySelectorAll('.loader-name span');
-  spans.forEach((s, i) => setTimeout(() => {
-    s.style.transition = `transform .6s cubic-bezier(.16,1,.3,1) ${i*.08}s, opacity .5s ${i*.08}s`;
-    s.style.transform = 'translateY(0)'; s.style.opacity = '1';
-  }, 100));
-
-  // Load DB first, then reveal — with 4s hard timeout as safety net
-  let revealed = false;
-  function doReveal() {
-    if (revealed) return;
-    revealed = true;
-    revealPage();
-  }
-
-  // Safety net — always reveal after 4 seconds no matter what
-  const safetyTimer = setTimeout(doReveal, 4000);
-
-  // Try to load DB — reveal as soon as it finishes
-  loadDB().then(() => {
-    clearTimeout(safetyTimer);
-    // Small delay so content is painted before reveal animation
-    setTimeout(doReveal, 300);
-  }).catch(() => {
-    clearTimeout(safetyTimer);
-    doReveal();
-  });
+window.addEventListener('load',()=>{
+  document.querySelectorAll('.loader-name span').forEach((s,i)=>setTimeout(()=>{
+    s.style.transition=`transform .6s cubic-bezier(.16,1,.3,1) ${i*.08}s,opacity .5s ${i*.08}s`;
+    s.style.transform='translateY(0)';s.style.opacity='1';
+  },100));
+  let revealed=false;
+  function doReveal(){if(revealed)return;revealed=true;revealPage();}
+  const timer=setTimeout(doReveal,4000);
+  loadDB().then(()=>{clearTimeout(timer);setTimeout(doReveal,300);}).catch(()=>{clearTimeout(timer);doReveal();});
 });
 
-/* ══ NAV APPEAR ══ */
-function initAnimations() {
-  const nl = document.querySelector('.nav-logo');
-  const nls = document.querySelectorAll('.nav-links a');
-  const nb = document.querySelector('.nav-edit-btn');
-  setTimeout(() => { nl.style.transition='opacity .8s, transform .8s var(--expo)'; nl.style.opacity='1'; nl.style.transform='translateY(0)'; }, 100);
-  nls.forEach((a,i) => setTimeout(()=>{a.style.transition=`opacity .6s, transform .6s var(--expo)`;a.style.opacity='1';a.style.transform='translateY(0)';},200+i*80));
-  setTimeout(()=>{nb.style.transition='opacity .6s';nb.style.opacity='1';},700);
-
-  /* hero content */
+/* ── ANIMATIONS ── */
+function initAnimations(){
+  const nl=document.querySelector('.nav-logo');
+  const nls=document.querySelectorAll('.nav-links a');
+  if(nl){nl.style.transition='opacity .8s';nl.style.opacity='1';}
+  nls.forEach((a,i)=>setTimeout(()=>{a.style.transition='opacity .6s';a.style.opacity='1';},200+i*80));
   setTimeout(()=>{
     const ey=document.querySelector('.hero-eyebrow');
-    ey.style.transition='opacity .9s var(--expo), transform .9s var(--expo)';
-    ey.style.opacity='1'; ey.style.transform='translateY(0)';
+    if(ey){ey.style.transition='opacity .9s';ey.style.opacity='1';}
   },400);
-  [document.getElementById('heroName1'), document.getElementById('heroName2')].forEach((n,i)=>{
-    setTimeout(()=>{
-      n.style.transition=`transform .9s cubic-bezier(.16,1,.3,1), opacity .7s`;
-      n.style.transform='translateY(0)'; n.style.opacity='1';
-    }, 550+i*150);
+  [document.getElementById('heroName1'),document.getElementById('heroName2')].forEach((n,i)=>{
+    if(!n)return;
+    setTimeout(()=>{n.style.transition='transform .9s cubic-bezier(.16,1,.3,1),opacity .7s';n.style.transform='translateY(0)';n.style.opacity='1';},550+i*150);
   });
   setTimeout(()=>{
     const t=document.querySelector('.hero-tagline');
-    t.style.transition='opacity .8s var(--expo), transform .8s var(--expo)';
-    t.style.opacity='1'; t.style.transform='translateY(0)';
+    if(t){t.style.transition='opacity .8s';t.style.opacity='1';t.style.transform='translateY(0)';}
   },900);
   setTimeout(()=>{
     const c=document.querySelector('.hero-cta');
-    c.style.transition='opacity .8s var(--expo), transform .8s var(--expo)';
-    c.style.opacity='1'; c.style.transform='translateY(0)';
+    if(c){c.style.transition='opacity .8s';c.style.opacity='1';c.style.transform='translateY(0)';}
   },1100);
   setTimeout(()=>{
     const sc=document.getElementById('heroScroll');
-    sc.style.transition='opacity .8s';
-    sc.style.opacity='1';
+    if(sc){sc.style.transition='opacity .8s';sc.style.opacity='1';}
   },1800);
-
   setupScrollAnims();
   setupCounters();
 }
 
-/* ══ SCROLL ANIMATIONS ══ */
-function setupScrollAnims() {
-  const style = document.createElement('style');
-  style.textContent = `.anim-up{opacity:0;transform:translateY(48px);transition:opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1);}.anim-up.in{opacity:1;transform:translateY(0);}.anim-left{opacity:0;transform:translateX(-48px);transition:opacity 1s cubic-bezier(.16,1,.3,1), transform 1s cubic-bezier(.16,1,.3,1);}.anim-left.in{opacity:1;transform:translateX(0);}.anim-right{opacity:0;transform:translateX(48px);transition:opacity 1s cubic-bezier(.16,1,.3,1), transform 1s cubic-bezier(.16,1,.3,1);}.anim-right.in{opacity:1;transform:translateX(0);}`;
+function setupScrollAnims(){
+  const style=document.createElement('style');
+  style.textContent='.anim-up{opacity:0;transform:translateY(48px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);}.anim-up.in{opacity:1;transform:translateY(0);}.anim-left{opacity:0;transform:translateX(-48px);transition:opacity 1s cubic-bezier(.16,1,.3,1),transform 1s cubic-bezier(.16,1,.3,1);}.anim-left.in{opacity:1;transform:translateX(0);}.anim-right{opacity:0;transform:translateX(48px);transition:opacity 1s cubic-bezier(.16,1,.3,1),transform 1s cubic-bezier(.16,1,.3,1);}.anim-right.in{opacity:1;transform:translateX(0);}';
   document.head.appendChild(style);
-  const obs = new IntersectionObserver(es => es.forEach((e,i) => { if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('in'), i*80); }}), {threshold:.1});
+  const obs=new IntersectionObserver(es=>es.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('in'),i*80);}),{threshold:.1});
   document.querySelectorAll('.anim-up,.anim-left,.anim-right').forEach(el=>obs.observe(el));
 }
 
-/* ══ COUNTERS ══ */
-function setupCounters() {
-  const obs = new IntersectionObserver(es => es.forEach(e => {
-    if(e.isIntersecting) {
-      const el = e.target, target = parseInt(el.dataset.target), dur = 1800;
-      const start = Date.now();
-      const tick = () => {
-        const p = Math.min((Date.now()-start)/dur, 1);
-        const ease = 1-Math.pow(1-p,4);
-        el.textContent = Math.round(ease*target);
-        if(p<1) requestAnimationFrame(tick);
-      };
-      tick(); obs.unobserve(el);
+function setupCounters(){
+  const obs=new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting){
+      const el=e.target,target=parseInt(el.dataset.target),dur=1800;
+      const start=Date.now();
+      const tick=()=>{const p=Math.min((Date.now()-start)/dur,1);const ease=1-Math.pow(1-p,4);el.textContent=Math.round(ease*target);if(p<1)requestAnimationFrame(tick);};
+      tick();obs.unobserve(el);
     }
-  }), {threshold:.5});
+  }),{threshold:.5});
   document.querySelectorAll('.stat-number').forEach(el=>obs.observe(el));
 }
 
-/* ══ CURSOR ══ */
-const cDot=document.getElementById('cDot'), cRing=document.getElementById('cRing');
+/* ── CURSOR ── */
+const cDot=document.getElementById('cDot'),cRing=document.getElementById('cRing');
 let mx=0,my=0,rx=0,ry=0;
 const trails=[];
 for(let i=0;i<6;i++){const t=document.createElement('div');t.className='c-trail';document.body.appendChild(t);trails.push({el:t,x:0,y:0});}
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cDot.style.left=mx+'px';cDot.style.top=my+'px';});
-(function animCursor(){
-  rx+=(mx-rx)*.11; ry+=(my-ry)*.11;
-  cRing.style.left=rx+'px'; cRing.style.top=ry+'px';
-  trails.forEach((t,i)=>{
-    const prev=i===0?{x:rx,y:ry}:trails[i-1];
-    t.x+=(prev.x-t.x)*(0.28-i*.03);
-    t.y+=(prev.y-t.y)*(0.28-i*.03);
-    t.el.style.left=t.x+'px'; t.el.style.top=t.y+'px';
-    t.el.style.opacity=String((6-i)/12);
-  });
-  requestAnimationFrame(animCursor);
-})();
+(function animCursor(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;cRing.style.left=rx+'px';cRing.style.top=ry+'px';trails.forEach((t,i)=>{const prev=i===0?{x:rx,y:ry}:trails[i-1];t.x+=(prev.x-t.x)*(0.28-i*.03);t.y+=(prev.y-t.y)*(0.28-i*.03);t.el.style.left=t.x+'px';t.el.style.top=t.y+'px';t.el.style.opacity=String((6-i)/12);});requestAnimationFrame(animCursor);})();
 document.querySelectorAll('a,button,.svc-card,.proj-card,.blog-card').forEach(el=>{
   el.addEventListener('mouseenter',()=>cRing.classList.add('hovering'));
   el.addEventListener('mouseleave',()=>cRing.classList.remove('hovering'));
 });
 
-/* ══ NAV SCROLL ══ */
+/* ── NAV ── */
 window.addEventListener('scroll',()=>document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>60));
+window.addEventListener('scroll',()=>{const hm=document.getElementById('heroMedia');if(hm)hm.style.transform=`translateY(${window.scrollY*.35}px)`;});
 
-/* ══ PARALLAX HERO ══ */
-window.addEventListener('scroll',()=>{
-  const s=window.scrollY;
-  const hm=document.getElementById('heroMedia');
-  if(hm) hm.style.transform=`translateY(${s*.35}px)`;
-});
-
-/* ══ API ══ */
+/* ── API ── */
 async function api(path,method='GET',body=null){
   const o={method,headers:{'Content-Type':'application/json'}};
   if(body)o.body=JSON.stringify(body);
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 10000);
-  try {
-    // Use the exact URL that we know works
-    const r = await fetch('/api' + path, {...o, signal: controller.signal});
+  const controller=new AbortController();
+  const timer=setTimeout(()=>controller.abort(),10000);
+  try{
+    const r=await fetch('/api'+path,{...o,signal:controller.signal});
     clearTimeout(timer);
-    const text = await r.text();
-    try { return JSON.parse(text); }
-    catch(e) { throw new Error('Bad JSON response: ' + text.substring(0,100)); }
-  } catch(e) {
-    clearTimeout(timer);
-    throw e;
-  }
+    const text=await r.text();
+    return JSON.parse(text);
+  }catch(e){clearTimeout(timer);throw e;}
 }
 
-/* ══ CLOUDINARY ══ */
+/* ── CLOUDINARY ── */
 async function cloudUpload(file){
-  showUpload('Uploading to cloud...');setProgress(15);
+  showUpload('Uploading...');setProgress(15);
   const {signature,timestamp,folder,api_key}=await api('/cloudinary-sign','POST',{});
   setProgress(35);
   const fd=new FormData();
-  fd.append('file',file);fd.append('api_key',api_key);fd.append('timestamp',timestamp);
-  fd.append('signature',signature);fd.append('folder',folder);
+  fd.append('file',file);fd.append('api_key',api_key);fd.append('timestamp',timestamp);fd.append('signature',signature);fd.append('folder',folder);
   const r=await fetch(`https://api.cloudinary.com/v1_1/${CLOUD}/auto/upload`,{method:'POST',body:fd});
-  setProgress(85);
-  const d=await r.json();
-  setProgress(100); setTimeout(()=>setProgress(0),700);
-  showUpload('✓ Uploaded!'); setTimeout(hideUpload,2200);
+  setProgress(85);const d=await r.json();setProgress(100);
+  setTimeout(()=>setProgress(0),700);showUpload('Uploaded!');setTimeout(hideUpload,2000);
   return{url:d.secure_url,public_id:d.public_id,resource_type:d.resource_type};
 }
 function setProgress(p){document.getElementById('progressBar').style.width=p+'%';}
 function showUpload(m){const t=document.getElementById('uploadToast');t.textContent=m;t.classList.add('show');}
 function hideUpload(){document.getElementById('uploadToast').classList.remove('show');}
 
-/* ══ ADMIN ══ */
+/* ── ADMIN ── */
 let editMode=false;
 function requestEdit(){if(editMode){exitEdit();return;}document.getElementById('adminOv').classList.add('open');setTimeout(()=>document.getElementById('pwInput').focus(),200);}
 function doLogin(){
@@ -875,7 +812,6 @@ function doLogin(){
 function closeLogin(){document.getElementById('adminOv').classList.remove('open');document.getElementById('pwInput').value='';document.getElementById('loginErr').classList.remove('show');}
 function enterEdit(){
   editMode=true;document.body.classList.add('edit-mode');
-  document.getElementById('editBtn').classList.add('active');document.getElementById('editBtn').textContent='Done Editing';
   document.getElementById('editBanner').classList.add('visible');
   document.getElementById('heroUpOv').classList.add('visible');
   document.getElementById('aboutUpZ').classList.add('visible');
@@ -883,37 +819,36 @@ function enterEdit(){
 }
 function exitEdit(){
   editMode=false;document.body.classList.remove('edit-mode');
-  document.getElementById('editBtn').classList.remove('active');document.getElementById('editBtn').textContent='Edit Site';
   document.getElementById('editBanner').classList.remove('visible');
   document.getElementById('heroUpOv').classList.remove('visible');
   document.getElementById('aboutUpZ').classList.remove('visible');
   document.querySelectorAll('.eb').forEach(el=>el.contentEditable='false');
 }
 
-/* ══ SAVE ══ */
+/* ── SAVE ── */
 async function saveAll(){
   showToast('Saving...');
+  const ids=['heroEyebrow','heroTagline','aboutP1','aboutP2','aboutP3','elevareIntro','svc1name','svc1desc','svc2name','svc2desc','svc3name','svc3desc','svc4name','svc4desc','advTitle','advDesc','contactIntro','contactEmail','contactLoc','footQuote','pcat0','ptitle0','pcap0','pcat1','ptitle1','pcap1','pcat2','ptitle2','pcap2','pcat3','ptitle3','pcap3','pcat4','ptitle4','pcap4'];
   const c={};
-  EIDS.forEach(id=>{const el=document.getElementById(id);if(el)c[id]=el.innerHTML;});
+  ids.forEach(id=>{const el=document.getElementById(id);if(el)c[id]=el.innerHTML;});
   await api('/save-all-content','POST',{content:c});
-  showToast('✓ Saved — live on every device!');
+  showToast('Saved — live on every device!');
 }
 function showToast(m){const t=document.getElementById('saveToast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3200);}
 
-/* ══ MEDIA UPLOAD ══ */
-let upSection='',upSlot='',upGalCat='',upGalCaption='';
+/* ── MEDIA UPLOAD ── */
+let upSection='',upSlot='',upGalCat='';
 function triggerUpload(section,slot){if(!editMode)return;upSection=section;upSlot=slot;upGalCat='';document.getElementById('gfi').click();}
 function triggerGalleryUpload(cat){if(!editMode)return;upSection='gallery';upSlot='';upGalCat=cat;document.getElementById('gfi').click();}
-
 document.getElementById('gfi').addEventListener('change',async e=>{
   const file=e.target.files[0];if(!file)return;
-  const {url,public_id,resource_type}=await cloudUpload(file);
+  const{url,public_id,resource_type}=await cloudUpload(file);
   if(upSection==='gallery'){
-    const caption=upGalCat?prompt('Add a caption for this media (optional):',''):'';
-    const item=await api('/gallery','POST',{category:upGalCat,url,resource_type,public_id,caption:caption||''});
-    galleryData.push({id:item.id,category:upGalCat,url,resource_type,caption:caption||''});
-    if(document.getElementById('galleryOverlay').classList.contains('open')){renderGallery(upGalCat);}
-  } else {
+    const caption=prompt('Caption for this media (optional):','')||'';
+    const item=await api('/gallery','POST',{category:upGalCat,url,resource_type,public_id,caption});
+    galleryData.push({id:item.id,category:upGalCat,url,resource_type,caption});
+    if(document.getElementById('galleryOverlay').classList.contains('open'))renderGallery(upGalCat);
+  }else{
     await api('/save-media','POST',{section:upSection,slot_key:upSlot,url,resource_type,public_id});
     applyMedia(upSection,upSlot,url,resource_type);
   }
@@ -925,21 +860,19 @@ function applyMedia(section,slot,url,rt){
     const s=document.getElementById('heroMedia');s.innerHTML='';
     if(rt==='video'){const v=document.createElement('video');v.src=url;v.autoplay=true;v.loop=true;v.muted=true;v.playsInline=true;s.appendChild(v);}
     else{const im=document.createElement('img');im.src=url;im.alt='Hero';s.appendChild(im);}
-  } else if(section==='about'){
+  }else if(section==='about'){
     const img=document.getElementById('aboutImg');img.src=url;img.style.display='block';
     document.getElementById('aboutPh').style.display='none';
-  } else if(section==='project'){
+  }else if(section==='project'){
     const idx=slot.replace('proj-','');
-    const ex=document.getElementById(`proj-media-${idx}`);if(!ex)return;
-    if(rt==='video'){const v=document.createElement('video');v.id=`proj-media-${idx}`;v.className='proj-media';v.src=url;v.autoplay=true;v.loop=true;v.muted=true;v.playsInline=true;ex.replaceWith(v);}
-    else{const im=document.createElement('img');im.id=`proj-media-${idx}`;im.className='proj-media';im.src=url;im.alt='Project';ex.replaceWith(im);}
+    const ex=document.getElementById('proj-media-'+idx);if(!ex)return;
+    if(rt==='video'){const v=document.createElement('video');v.id='proj-media-'+idx;v.className='proj-media';v.src=url;v.autoplay=true;v.loop=true;v.muted=true;v.playsInline=true;ex.replaceWith(v);}
+    else{const im=document.createElement('img');im.id='proj-media-'+idx;im.className='proj-media';im.src=url;im.alt='Project';ex.replaceWith(im);}
   }
 }
 
-/* ══ GALLERY ══ */
-let galleryData=[];
-let currentGalCat='';
-
+/* ── GALLERY ── */
+let galleryData=[],currentGalCat='';
 function openGallery(cat,title){
   currentGalCat=cat;
   document.getElementById('galCatLabel').textContent='Elevare Creative';
@@ -958,24 +891,17 @@ function closeGallery(){
 function renderGallery(cat){
   const grid=document.getElementById('galleryGrid');
   const items=galleryData.filter(i=>i.category===cat);
-  let html='';
-  if(!items.length && !editMode){
-    html='<div class="gallery-empty">No work added yet for this category. Enter edit mode to upload your work.</div>';
-  } else {
-    items.forEach(item=>{
-      const isVid=item.resource_type==='video';
-      html+=`<div class="gallery-item" onclick="openLightbox('${item.url}','${item.resource_type}')">
-        ${isVid?`<video src="${item.url}" muted loop playsinline></video>`:`<img src="${item.url}" alt="${item.caption||cat}" loading="lazy"/>`}
-        <div class="gallery-item-overlay"><div class="gallery-caption">${item.caption||''}</div></div>
-        <button class="gallery-item-del" onclick="event.stopPropagation();deleteGalleryItem(${item.id},'${cat}')">✕ Remove</button>
-      </div>`;
-    });
-    if(editMode){
-      html+=`<div class="gallery-add-btn" onclick="triggerGalleryUpload('${cat}')"><div class="gallery-add-inner"><span>+</span>Add Work</div></div>`;
-    }
-  }
+  if(!items.length&&!editMode){grid.innerHTML='<div class="gallery-empty">No work added yet for this category.</div>';return;}
+  let html=items.map(item=>{
+    const isVid=item.resource_type==='video';
+    return '<div class="gallery-item" onclick="openLightbox(''+item.url+'',''+item.resource_type+'')">'
+      +(isVid?'<video src="'+item.url+'" muted loop playsinline></video>':'<img src="'+item.url+'" alt="'+( item.caption||cat)+'" loading="lazy"/>')
+      +'<div class="gallery-item-overlay"><div class="gallery-caption">'+(item.caption||'')+'</div></div>'
+      +'<button class="gallery-item-del" onclick="event.stopPropagation();deleteGalleryItem('+item.id+',''+cat+'')">Remove</button>'
+      +'</div>';
+  }).join('');
+  if(editMode)html+='<div class="gallery-add-btn" onclick="triggerGalleryUpload(''+cat+'')"><div class="gallery-add-inner"><span>+</span>Add Work</div></div>';
   grid.innerHTML=html;
-  // Autoplay videos on hover
   grid.querySelectorAll('video').forEach(v=>{
     v.parentElement.addEventListener('mouseenter',()=>v.play());
     v.parentElement.addEventListener('mouseleave',()=>{v.pause();v.currentTime=0;});
@@ -983,60 +909,48 @@ function renderGallery(cat){
 }
 async function deleteGalleryItem(id,cat){
   if(!confirm('Remove this item?'))return;
-  await api(`/gallery/${id}`,'DELETE');
+  await api('/gallery/'+id,'DELETE');
   galleryData=galleryData.filter(i=>i.id!==id);
   renderGallery(cat);
 }
 
-/* ══ LIGHTBOX ══ */
+/* ── LIGHTBOX ── */
 function openLightbox(url,rt){
-  const box=document.getElementById('lightbox');
   const c=document.getElementById('lightboxContent');
-  if(rt==='video'){c.innerHTML=`<video src="${url}" controls autoplay style="max-width:90vw;max-height:85vh"></video>`;}
-  else{c.innerHTML=`<img src="${url}" style="max-width:90vw;max-height:85vh;object-fit:contain"/>`;}
-  box.classList.add('open');
+  if(rt==='video')c.innerHTML='<video src="'+url+'" controls autoplay style="max-width:90vw;max-height:85vh"></video>';
+  else c.innerHTML='<img src="'+url+'" style="max-width:90vw;max-height:85vh;object-fit:contain"/>';
+  document.getElementById('lightbox').classList.add('open');
   document.body.style.overflow='hidden';
 }
 function closeLightbox(){document.getElementById('lightbox').classList.remove('open');document.body.style.overflow='';}
 
-/* ══ PROJECTS ══ */
+/* ── PROJECTS ── */
 function removeProj(btn){if(!editMode||!confirm('Remove?'))return;btn.closest('.proj-card').remove();}
 let pc=5;
 function addProj(){
   if(!editMode)return;
   const idx=pc++,g=document.getElementById('projGrid'),a=g.querySelector('.add-proj');
   const c=document.createElement('div');c.className='proj-card in';c.dataset.index=idx;c.style.gridColumn='span 4';
-  c.innerHTML=`<div class="proj-media-ph" id="proj-media-${idx}">NEW</div><div class="proj-ov"><div><p class="proj-cat eb" contenteditable="true">Category</p><h3 class="proj-title eb" contenteditable="true">Project Title</h3><p class="proj-cap eb" contenteditable="true">Short description.</p></div></div><div class="proj-arrow">↗</div><div class="card-ec"><button class="ec-btn" onclick="triggerUpload('project','proj-${idx}')">Replace</button><button class="ec-btn del" onclick="removeProj(this)">Remove</button></div>`;
+  c.innerHTML='<div class="proj-media-ph" id="proj-media-'+idx+'">NEW</div><div class="proj-ov"><div><p class="proj-cat eb" contenteditable="true">Category</p><h3 class="proj-title eb" contenteditable="true">Title</h3><p class="proj-cap eb" contenteditable="true">Caption</p></div></div><div class="proj-arrow">↗</div><div class="card-ec"><button class="ec-btn" onclick="triggerUpload('project','proj-'+idx+'')">Replace</button><button class="ec-btn del" onclick="removeProj(this)">Remove</button></div>';
   g.insertBefore(c,a);
 }
 
-/* ══ BLOG ══ */
-let blogPosts=[
-  {id:'d1',date:'February 2025',cat:'Youth Leadership',title:'Why Young People Must Own Their Narrative',excerpt:'The stories we tell about ourselves shape the world we inherit. In a digital age flooded with noise, the most radical act a young person can commit is to speak their own truth.',content:`<p>The stories we tell about ourselves shape the world we inherit. In a digital age flooded with noise, the most radical act a young person can commit is to speak their own truth — clearly, boldly, and without apology.</p><p>For too long, the narratives of young people have been written by others — by media, by institutions, by those who hold power but don't hold lived experience. Youth advocacy is, at its core, a reclamation of authorship.</p><p>I have seen it firsthand: when a young person picks up a camera, steps behind a microphone, or writes their first public piece — something shifts. The world listens differently to those who have learned to speak from conviction.</p>`},
-  {id:'d2',date:'January 2025',cat:'Community',title:'The Art of Showing Up: What Communities Owe Young People',excerpt:'We talk about youth potential constantly. But potential is not a gift we give — it is a condition we either cultivate or extinguish through the structures we build.',content:`<p>We talk about youth potential constantly. But potential is not a gift we give to young people — it is a condition we either cultivate or extinguish through the structures we build around them.</p><p>Showing up for young people is not a once-a-year event. It is the daily work of listening before speaking, making space before filling it, asking what they need instead of assuming we already know.</p>`},
-  {id:'d3',date:'December 2024',cat:'Reflection',title:'On Stillness: A Letter to Young Creatives',excerpt:'Before you create for the world, you must create for yourself. There is a kind of work that happens in the quiet — slower, stranger, and far more honest.',content:`<p>Before you create for the world, you must create for yourself. There is a kind of work that happens in the quiet — slower, stranger, and far more honest than anything made for an audience.</p><p>We live in an era that rewards speed, volume, and visibility. But the creatives I most admire are those who have learned to be still with themselves first. Stillness is not laziness — it is where the real ideas live.</p>`}
-];
+/* ── BLOG ── */
+let blogPosts=[];
 function renderBlog(){
   const g=document.getElementById('blogGrid');
   if(!blogPosts.length){g.innerHTML='<p style="font-family:var(--fp);color:var(--text-light);font-style:italic">No posts yet.</p>';return;}
-  g.innerHTML=blogPosts.map(p=>`
-    <div class="blog-card anim-up in">
-      <div class="blog-card-ctrl"><button class="ec-btn del" onclick="deletePost('${p.id}')">Delete</button></div>
-      <p class="blog-date">${p.date||''} · ${p.cat||'Youth Advocacy'}</p>
-      <h3 class="blog-title">${p.title}</h3>
-      <p class="blog-excerpt">${p.excerpt}</p>
-      <div class="blog-rm" onclick="openBlogModal('${p.id}')">Continue Reading</div>
-    </div>`).join('');
+  g.innerHTML=blogPosts.map(p=>'<div class="blog-card anim-up in"><div class="blog-card-ctrl"><button class="ec-btn del" onclick="deletePost(''+p.id+'')">Delete</button></div><p class="blog-date">'+(p.date||'')+' · '+(p.cat||'Youth Advocacy')+'</p><h3 class="blog-title">'+p.title+'</h3><p class="blog-excerpt">'+p.excerpt+'</p><div class="blog-rm" onclick="openBlogModal(''+p.id+'')">Continue Reading</div></div>').join('');
 }
 function openBlogModal(id){
   const p=blogPosts.find(x=>String(x.id)===String(id));if(!p)return;
-  document.getElementById('blogMC').innerHTML=`<h2>${p.title}</h2><p class="m-meta">${p.date||''} · ${p.cat||''}</p><div>${p.content}</div>`;
+  document.getElementById('blogMC').innerHTML='<h2>'+p.title+'</h2><p class="m-meta">'+(p.date||'')+' · '+(p.cat||'')+'</p><div>'+p.content+'</div>';
   document.getElementById('blogModal').classList.add('open');
 }
 function closeBlogModal(){document.getElementById('blogModal').classList.remove('open');}
 async function deletePost(id){
-  if(!editMode||!confirm('Delete this post?'))return;
-  if(!String(id).startsWith('d')){await api(`/blog/${id}`,'DELETE');}
+  if(!editMode||!confirm('Delete?'))return;
+  if(!/^d/.test(String(id)))await api('/blog/'+id,'DELETE');
   blogPosts=blogPosts.filter(p=>String(p.id)!==String(id));
   renderBlog();showToast('Post deleted.');
 }
@@ -1048,62 +962,73 @@ async function publishPost(){
   const cat=document.getElementById('nbCat').value.trim();
   const body=document.getElementById('nbContent').value.trim();
   if(!title||!body){alert('Please add a title and content.');return;}
-  const excerpt=body.substring(0,220)+(body.length>220?'…':'');
-  const content=body.split('\n\n').map(p=>`<p>${p}</p>`).join('');
+  const excerpt=body.substring(0,220)+(body.length>220?'...':'');
+  const content=body.split('
+
+').map(p=>'<p>'+p+'</p>').join('');
   showToast('Publishing...');
   const post=await api('/blog','POST',{title,excerpt,content,category:cat||'Youth Advocacy',post_date:date||new Date().toLocaleDateString('en-US',{month:'long',year:'numeric'})});
   blogPosts.unshift({id:post.id,date:post.post_date,cat:post.category,title:post.title,excerpt:post.excerpt,content:post.content});
   renderBlog();closeNewBlog();
   ['nbTitle','nbDate','nbCat','nbContent'].forEach(id=>document.getElementById(id).value='');
-  showToast('✓ Post live on all devices!');
+  showToast('Post published!');
   document.getElementById('blog').scrollIntoView({behavior:'smooth'});
 }
 
-/* ══ LOAD FROM DB ══ */
+/* ── LOAD DB ── */
 async function loadDB(){
   try{
-    const d = await api('/load');
-    if(!d || d.error) return;
-
-    // Apply all text content
+    const d=await api('/load');
+    if(!d||d.error)return;
     if(d.content){
       Object.entries(d.content).forEach(([id,v])=>{
-        if(id.startsWith('_')) return;
-        const el = document.getElementById(id);
-        if(el && v) el.innerHTML = v;
+        if(id.startsWith('_'))return;
+        const el=document.getElementById(id);
+        if(el&&v)el.innerHTML=v;
+      });
+      // Apply social links to contact section icons
+      const socialMap={socialIG:'cIG',socialTT:'cTT',socialLI:'cLI',socialFB:'cFB',socialYT:'cYT'};
+      Object.entries(socialMap).forEach(([key,elId])=>{
+        const val=d.content[key];
+        const footEl=document.getElementById(key);
+        const contactEl=document.getElementById(elId);
+        if(val&&footEl)footEl.href=val;
+        if(val&&contactEl)contactEl.href=val;
       });
     }
-
-    // Apply media (hero image, about photo, project media)
-    if(d.media && d.media.length > 0){
-      d.media.forEach(m => applyMedia(m.section, m.slot_key, m.url, m.resource_type));
-    }
-
-    // Apply gallery data
-    if(d.gallery){
-      galleryData = d.gallery.map(i=>({
-        id:i.id, category:i.category, url:i.url,
-        resource_type:i.resource_type, caption:i.caption||''
-      }));
-    }
-
-    // Apply blog posts
-    if(d.posts && d.posts.length > 0){
-      blogPosts = d.posts.map(p=>({
-        id:p.id, date:p.post_date, cat:p.category,
-        title:p.title, excerpt:p.excerpt, content:p.content
-      }));
-    }
-
+    if(d.media&&d.media.length)d.media.forEach(m=>applyMedia(m.section,m.slot_key,m.url,m.resource_type));
+    if(d.gallery)galleryData=d.gallery.map(i=>({id:i.id,category:i.category,url:i.url,resource_type:i.resource_type,caption:i.caption||''}));
+    if(d.posts&&d.posts.length)blogPosts=d.posts.map(p=>({id:p.id,date:p.post_date,cat:p.category,title:p.title,excerpt:p.excerpt,content:p.content}));
     renderBlog();
-    console.log('DB load complete!');
-  } catch(err){
-    console.error('DB load failed:', err.message);
+  }catch(err){
+    console.error('DB load failed:',err.message);
     renderBlog();
   }
 }
 
-/* ══ CLOSE MODALS ══ */
+/* ── CONTACT FORM ── */
+async function handleFormSubmit(e){
+  e.preventDefault();
+  const btn=document.getElementById('submitBtn');
+  const success=document.getElementById('formSuccess');
+  const error=document.getElementById('formError');
+  btn.textContent='Sending...';btn.disabled=true;
+  success.style.display='none';error.style.display='none';
+  const form=document.getElementById('contactForm');
+  const name=form.querySelector('[name="name"]').value;
+  const email=form.querySelector('[name="email"]').value;
+  const subject=form.querySelector('[name="subject"]')?form.querySelector('[name="subject"]').value:'';
+  const message=form.querySelector('[name="message"]').value;
+  try{
+    const response=await fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,subject,message})});
+    const data=await response.json();
+    if(data.ok){success.style.display='block';form.reset();}
+    else throw new Error('Failed');
+  }catch(err){error.style.display='block';}
+  btn.textContent='Send Message';btn.disabled=false;
+}
+
+/* ── CLOSE MODALS ── */
 ['blogModal','newBlogModal','adminOv'].forEach(id=>{
   document.getElementById(id).addEventListener('click',e=>{
     if(e.target===document.getElementById(id)){
@@ -1113,172 +1038,34 @@ async function loadDB(){
     }
   });
 });
-document.getElementById('lightbox').addEventListener('click',e=>{if(e.target===document.getElementById('lightbox'))closeLightbox();});ument.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){closeBlogModal();closeNewBlog();closeLogin();closeLightbox();closeGallery();}
+document.getElementById('lightbox').addEventListener('click',e=>{if(e.target===document.getElementById('lightbox'))closeLightbox();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeBlogModal();closeNewBlog();closeLogin();closeLightbox();closeGallery();}});
+
+/* ── SECRET ADMIN TRIGGER ── */
+// Gold line - tap 3 times to open login
+let _taps=0,_tapTimer=null;
+function _handleTap(){
+  _taps++;clearTimeout(_tapTimer);
+  _tapTimer=setTimeout(()=>_taps=0,4000);
+  const inner=document.querySelector('#secretLine div');
+  if(inner){
+    inner.style.background='linear-gradient(90deg,transparent,rgba(201,168,76,1),transparent)';
+    setTimeout(()=>{inner.style.background='linear-gradient(90deg,transparent,rgba(201,168,76,0.35),transparent)';},250);
+  }
+  if(_taps>=3){
+    _taps=0;clearTimeout(_tapTimer);
+    const ov=document.getElementById('adminOv');
+    const pw=document.getElementById('pwInput');
+    if(ov&&pw){ov.style.display='flex';ov.classList.add('open');setTimeout(()=>pw.focus(),100);}
+  }
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  const line=document.getElementById('secretLine');
+  if(line){
+    line.addEventListener('click',e=>{e.stopPropagation();_handleTap();});
+    line.addEventListener('touchstart',e=>{e.preventDefault();e.stopPropagation();_handleTap();},{passive:false});
+  }
 });
-
-/* ══ CONTACT FORM ══ */
-async function handleFormSubmit(e) {
-  e.preventDefault();
-  const btn = document.getElementById('submitBtn');
-  const success = document.getElementById('formSuccess');
-  const error = document.getElementById('formError');
-  btn.textContent = 'Sending...';
-  btn.disabled = true;
-  success.style.display = 'none';
-  error.style.display = 'none';
-  const form = document.getElementById('contactForm');
-  const name = form.querySelector('[name="name"]').value;
-  const email = form.querySelector('[name="email"]').value;
-  const subject = form.querySelector('[name="subject"]') ? form.querySelector('[name="subject"]').value : '';
-  const message = form.querySelector('[name="message"]').value;
-  try {
-    const response = await fetch('/api/contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, email, subject, message })
-    });
-    const data = await response.json();
-    if (data.ok) {
-      success.style.display = 'block';
-      form.reset();
-    } else {
-      throw new Error('Failed');
-    }
-  } catch (err) {
-    error.style.display = 'block';
-  }
-  btn.textContent = 'Send Message';
-  btn.disabled = false;
-}
-
-
-/* ══ SECRET ADMIN TRIGGERS ══ */
-
-// METHOD 1 — Secret URL: visit  ?elevare=admin  to open login
-// e.g. https://jannixsakaula.com/?elevare=admin
-(function() {
-  const params = new URLSearchParams(window.location.search);
-  if (params.get('elevare') === 'admin') {
-    // Wait for everything to fully load including the loader animation
-    window.addEventListener('load', function() {
-      setTimeout(function() {
-        // Make sure admin overlay exists before opening
-        var overlay = document.getElementById('adminOv');
-        var pwInput = document.getElementById('pwInput');
-        if (overlay && pwInput) {
-          overlay.classList.add('open');
-          setTimeout(function() { pwInput.focus(); }, 200);
-        }
-      }, 2200); // Wait for page loader to finish
-    });
-  }
-})();
-
-// METHOD 2 — Gold line at bottom: tap 3 times
-let _taps = 0, _tapTimer = null;
-function _handleTap() {
-  _taps++;
-  clearTimeout(_tapTimer);
-  _tapTimer = setTimeout(function() { _taps = 0; }, 4000);
-  const inner = document.querySelector('#secretLine div');
-  if (inner) {
-    inner.style.background = 'linear-gradient(90deg,transparent,rgba(201,168,76,1),transparent)';
-    setTimeout(function() {
-      inner.style.background = 'linear-gradient(90deg,transparent,rgba(201,168,76,0.35),transparent)';
-    }, 250);
-  }
-  if (_taps >= 3) {
-    _taps = 0;
-    clearTimeout(_tapTimer);
-    setTimeout(function() { editMode ? exitEdit() : requestEdit(); }, 100);
-  }
-}
-
-// METHOD 3 — Invisible dot top-left corner: tap 3 times
-window.addEventListener('load', function() {
-  [document.getElementById('secretLine'), document.getElementById('secretDot')].forEach(function(el) {
-    if (!el) return;
-    el.addEventListener('click', function(e) { e.stopPropagation(); _handleTap(); });
-    el.addEventListener('touchstart', function(e) {
-      e.preventDefault(); e.stopPropagation(); _handleTap();
-    }, { passive: false });
-  });
-});
-
-/* ══ ADMIN TRIGGERS ══ */
-
-// Check URL for secret param — runs immediately when script loads
-function checkSecretURL() {
-  try {
-    var url = window.location.href;
-    if (url.indexOf('elevare=admin') !== -1) {
-      var overlay = document.getElementById('adminOv');
-      var input = document.getElementById('pwInput');
-      if (overlay && input) {
-        overlay.style.display = 'flex';
-        overlay.classList.add('open');
-        input.focus();
-        return true;
-      }
-    }
-  } catch(e) {}
-  return false;
-}
-
-// Try immediately, then keep retrying until it works
-var _urlCheckInterval = setInterval(function() {
-  if (checkSecretURL()) {
-    clearInterval(_urlCheckInterval);
-  }
-}, 300);
-// Stop trying after 10 seconds
-setTimeout(function() { clearInterval(_urlCheckInterval); }, 10000);
-
-// Gold line tap trigger
-var _taps = 0, _tapTimer = null;
-function _handleTap() {
-  _taps++;
-  clearTimeout(_tapTimer);
-  _tapTimer = setTimeout(function() { _taps = 0; }, 4000);
-  var inner = document.querySelector('#secretLine div');
-  if (inner) {
-    inner.style.background = 'linear-gradient(90deg,transparent,rgba(201,168,76,1),transparent)';
-    setTimeout(function() {
-      inner.style.background = 'linear-gradient(90deg,transparent,rgba(201,168,76,0.35),transparent)';
-    }, 250);
-  }
-  if (_taps >= 3) {
-    _taps = 0;
-    clearTimeout(_tapTimer);
-    var overlay = document.getElementById('adminOv');
-    var input = document.getElementById('pwInput');
-    if (overlay && input) {
-      overlay.style.display = 'flex';
-      overlay.classList.add('open');
-      input.focus();
-    }
-  }
-}
-
-// Attach tap listeners once DOM is ready
-document.addEventListener('DOMContentLoaded', function() {
-  var line = document.getElementById('secretLine');
-  var dot = document.getElementById('secretDot');
-  [line, dot].forEach(function(el) {
-    if (!el) return;
-    el.addEventListener('click', function(e) {
-      e.stopPropagation();
-      _handleTap();
-    });
-    el.addEventListener('touchstart', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      _handleTap();
-    }, { passive: false });
-  });
-});
-
 </script>
 </body>
 </html>
