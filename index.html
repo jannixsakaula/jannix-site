@@ -371,7 +371,7 @@ footer{background:var(--charcoal);padding:72px 64px 44px;}
 <input type="file" id="gfi" accept="image/*,video/*"/>
 <div class="save-toast" id="saveToast"></div>
 <div id="dbDebugBanner" style="position:fixed;bottom:0;left:0;right:0;background:#0D1B4B;color:#C9A84C;font-family:monospace;font-size:11px;padding:6px 12px;z-index:99999;display:block;border-top:1px solid rgba(201,168,76,.3)">
-  Loading site data...
+  Loading site data... (if this stays, the API is unreachable — check Vercel logs)
 </div>
 <div class="edit-banner" id="editBanner">✎ Edit Mode — Click any text to edit <button class="save-btn" onclick="saveAll()">Save All Changes</button></div>
 
@@ -832,18 +832,26 @@ window.addEventListener('scroll',()=>{
 async function api(path,method='GET',body=null){
   const o={method,headers:{'Content-Type':'application/json'}};
   if(body)o.body=JSON.stringify(body);
-  // 8 second timeout so it never hangs forever
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 8000);
-  try {
-    const r = await fetch('/api'+path, {...o, signal: controller.signal});
-    clearTimeout(timer);
-    return r.json();
-  } catch(e) {
-    clearTimeout(timer);
-    if(e.name === 'AbortError') throw new Error('API timeout - check Vercel function logs');
-    throw e;
+  // Try /api/index path first (Vercel), then /api as fallback
+  const urls = ['/api/index' + path, '/api' + path];
+  for(const url of urls){
+    try {
+      const r = await fetch(url, {...o, signal: controller.signal});
+      if(r.ok || r.status < 500){
+        clearTimeout(timer);
+        return r.json();
+      }
+    } catch(e) {
+      if(e.name === 'AbortError'){
+        clearTimeout(timer);
+        throw new Error('API timeout');
+      }
+    }
   }
+  clearTimeout(timer);
+  throw new Error('All API endpoints failed');
 }
 
 /* ══ CLOUDINARY ══ */
