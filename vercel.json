@@ -1,5 +1,13 @@
 {
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/index" }
+    { "source": "/api/load", "destination": "/api/load" },
+    { "source": "/api/save-all-content", "destination": "/api/save" },
+    { "source": "/api/cloudinary-sign", "destination": "/api/sign" },
+    { "source": "/api/save-media", "destination": "/api/media" },
+    { "source": "/api/gallery/:id", "destination": "/api/gallery" },
+    { "source": "/api/gallery", "destination": "/api/gallery" },
+    { "source": "/api/blog/:id", "destination": "/api/blog" },
+    { "source": "/api/blog", "destination": "/api/blog" },
+    { "source": "/api/contact", "destination": "/api/contact" }
   ]
 }
