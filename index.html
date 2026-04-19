@@ -56,14 +56,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
 .upload-toast{position:fixed;top:20px;right:24px;background:var(--royal);color:var(--ivory);font-family:var(--fd);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;padding:12px 24px;z-index:99999;border-left:3px solid var(--gold);opacity:0;transform:translateX(20px);transition:all .4s var(--expo);pointer-events:none;}
 .upload-toast.show{opacity:1;transform:translateX(0);}
 
-/* ── PAGE LOADER ── */
-.page-loader{position:fixed;inset:0;background:var(--royal);z-index:99997;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;}
-.loader-name{font-family:var(--fd);font-size:clamp(28px,5vw,56px);font-weight:700;color:var(--ivory);letter-spacing:.1em;text-transform:uppercase;overflow:hidden;}
-.loader-name span{display:inline-block;}
-.loader-bar{width:200px;height:1px;background:rgba(201,168,76,.2);position:relative;overflow:hidden;}
-.loader-bar::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:var(--gold);animation:loaderSlide 1.2s var(--expo) .3s forwards;}
-@keyframes loaderSlide{to{left:0;}}
-.loader-sub{font-family:var(--fp);font-style:italic;color:rgba(248,244,238,.4);font-size:.95rem;letter-spacing:.1em;opacity:0;animation:fadeIn .8s .8s forwards;}
+
 
 /* ── NAV ── */
 nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:28px 60px;display:flex;align-items:center;justify-content:space-between;transition:background .6s var(--silk),padding .4s var(--silk),backdrop-filter .6s;}
@@ -97,7 +90,7 @@ nav.scrolled{background:rgba(13,27,75,.96);backdrop-filter:blur(20px);padding:16
 .hero-content{position:relative;z-index:3;text-align:center;padding:0 40px;}
 .hero-eyebrow{font-family:var(--fd);font-size:.65rem;letter-spacing:.45em;text-transform:uppercase;color:var(--gold);margin-bottom:32px;display:flex;align-items:center;justify-content:center;gap:20px;}
 .hero-eyebrow::before,.hero-eyebrow::after{content:'';width:28px;height:1px;background:var(--gold);}
-.hero-name-wrap{overflow:hidden;margin-bottom:8px;}
+.hero-name-wrap{margin-bottom:8px;}
 .hero-name{font-family:var(--fd);font-size:clamp(58px,10vw,148px);font-weight:900;color:var(--ivory);line-height:.9;letter-spacing:.04em;text-transform:uppercase;display:block;}
 .hero-name.gold{color:var(--gold-light);}
 .hero-tagline{font-family:var(--fb);font-style:italic;font-size:clamp(18px,2.4vw,28px);color:rgba(248,244,238,.65);margin-top:28px;font-weight:300;letter-spacing:.06em;}
@@ -357,22 +350,13 @@ footer{background:var(--charcoal);padding:72px 64px 44px;}
 <div class="c-dot" id="cDot"></div>
 <div class="c-ring" id="cRing"></div>
 
-<!-- LOADER -->
-<div class="page-loader" id="pageLoader">
-  <div class="loader-name">
-    <span id="l1">J</span><span id="l2">a</span><span id="l3">n</span><span id="l4">n</span><span id="l5">i</span><span id="l6">x</span>
-  </div>
-  <div class="loader-bar"></div>
-  <div class="loader-sub">Elevare Creative · Zambia</div>
-</div>
+
 
 <div class="progress-bar" id="progressBar"></div>
 <div class="upload-toast" id="uploadToast"></div>
 <input type="file" id="gfi" accept="image/*,video/*"/>
 <div class="save-toast" id="saveToast"></div>
-<div id="statusBar" style="position:fixed;top:0;left:0;right:0;background:rgba(13,27,75,.95);color:#C9A84C;font-family:monospace;font-size:12px;padding:8px 16px;z-index:99999;text-align:center;border-bottom:1px solid #C9A84C;">
-  Connecting to database...
-</div>
+
 
 <div class="edit-banner" id="editBanner">✎ Edit Mode — Click any text to edit <button class="save-btn" onclick="saveAll()">Save All Changes</button></div>
 
@@ -688,49 +672,17 @@ footer{background:var(--charcoal);padding:72px 64px 44px;}
 const CLOUD='dgsi6tlxe';
 const PASS='Sakaula@2008';
 
-/* ── LOADER ── */
-// Show page immediately - no waiting for DB
-window.addEventListener('DOMContentLoaded',()=>{
-  // Hide loader quickly so content is always visible
-  const l=document.getElementById('pageLoader');
-  if(l){
-    setTimeout(()=>{
-      l.style.transition='opacity .6s';
-      l.style.opacity='0';
-      setTimeout(()=>{ l.style.display='none'; initAnimations(); },600);
-    },800); // Show loader for just 0.8s then always reveal
-  }
-  // Load DB in background - updates content when ready
+/* ── INIT ── */
+// No loader - page shows immediately, DB loads in background
+window.addEventListener('DOMContentLoaded', () => {
+  initAnimations();
   loadDB();
 });
 
 /* ── ANIMATIONS ── */
 function initAnimations(){
-  const nl=document.querySelector('.nav-logo');
-  const nls=document.querySelectorAll('.nav-links a');
-  if(nl){nl.style.transition='opacity .8s';nl.style.opacity='1';}
-  nls.forEach((a,i)=>setTimeout(()=>{a.style.transition='opacity .6s';a.style.opacity='1';},200+i*80));
-  setTimeout(()=>{
-    const ey=document.querySelector('.hero-eyebrow');
-    if(ey){ey.style.transition='opacity .9s';ey.style.opacity='1';}
-  },400);
-  [document.getElementById('heroName1'),document.getElementById('heroName2')].forEach((n,i)=>{
-    if(!n)return;
-    setTimeout(()=>{n.style.transition='transform .9s cubic-bezier(.16,1,.3,1),opacity .7s';n.style.transform='translateY(0)';n.style.opacity='1';},550+i*150);
-  });
-  setTimeout(()=>{
-    const t=document.querySelector('.hero-tagline');
-    if(t){t.style.transition='opacity .8s';t.style.opacity='1';t.style.transform='translateY(0)';}
-  },900);
-  setTimeout(()=>{
-    const c=document.querySelector('.hero-cta');
-    if(c){c.style.transition='opacity .8s';c.style.opacity='1';c.style.transform='translateY(0)';}
-  },1100);
-  setTimeout(()=>{
-    const sc=document.getElementById('heroScroll');
-    if(sc){sc.style.transition='opacity .8s';sc.style.opacity='1';}
-  },1800);
-  // scroll anims removed for stability
+  // Everything is visible by default via CSS
+  // No JS-controlled show/hide - just run counters
   setupCounters();
 }
 
@@ -976,48 +928,30 @@ async function publishPost(){
 
 /* ── LOAD DB ── */
 async function loadDB(){
-  const sb = document.getElementById('statusBar');
-  const setStatus = (msg, color) => {
-    if(sb){ sb.textContent = msg; sb.style.color = color || '#C9A84C'; }
-  };
   try{
-    setStatus('Loading your content from database...');
-    const d = await api('/load');
-    
-    if(!d){ setStatus('ERROR: API returned nothing', '#ff4444'); renderBlog(); return; }
-    if(d.error){ setStatus('DB ERROR: ' + d.error, '#ff4444'); renderBlog(); return; }
-    
-    const keyCount = d.content ? Object.keys(d.content).length : 0;
-    setStatus('DB connected! Applying ' + keyCount + ' items...');
-    
-    let applied = 0;
+    const d=await api('/load');
+    if(!d||d.error){ renderBlog(); return; }
     if(d.content){
       Object.entries(d.content).forEach(([id,v])=>{
         if(id.startsWith('_'))return;
         const el=document.getElementById(id);
-        if(el&&v){ el.innerHTML=v; applied++; }
+        if(el&&v) el.innerHTML=v;
       });
-      // Apply social links
-      const socialMap={socialIG:'cIG',socialTT:'cTT',socialLI:'cLI',socialFB:'cFB',socialYT:'cYT'};
-      Object.entries(socialMap).forEach(([key,elId])=>{
-        const val=d.content[key];
-        if(val&&document.getElementById(key)) document.getElementById(key).href=val;
-        if(val&&document.getElementById(elId)) document.getElementById(elId).href=val;
+      const sm={socialIG:'cIG',socialTT:'cTT',socialLI:'cLI',socialFB:'cFB',socialYT:'cYT'};
+      Object.entries(sm).forEach(([k,eid])=>{
+        const v=d.content[k];
+        if(v){
+          const fe=document.getElementById(k); if(fe) fe.href=v;
+          const ce=document.getElementById(eid); if(ce) ce.href=v;
+        }
       });
     }
-    
     if(d.media&&d.media.length) d.media.forEach(m=>applyMedia(m.section,m.slot_key,m.url,m.resource_type));
     if(d.gallery) galleryData=d.gallery.map(i=>({id:i.id,category:i.category,url:i.url,resource_type:i.resource_type,caption:i.caption||''}));
     if(d.posts&&d.posts.length) blogPosts=d.posts.map(p=>({id:p.id,date:p.post_date,cat:p.category,title:p.title,excerpt:p.excerpt,content:p.content}));
-    
     renderBlog();
-    setStatus('✓ Content loaded! Applied ' + applied + ' items. Keys: ' + keyCount + ' | Posts: ' + (d.posts||[]).length + ' | Media: ' + (d.media||[]).length, '#4caf50');
-    // Hide status bar after 5 seconds
-    setTimeout(()=>{ if(sb) sb.style.display='none'; }, 5000);
-    
   }catch(err){
-    setStatus('FAILED: ' + err.message + ' — check browser console', '#ff4444');
-    console.error('DB load failed:',err);
+    console.error('DB load failed:',err.message);
     renderBlog();
   }
 }
