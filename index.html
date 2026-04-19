@@ -370,6 +370,9 @@ footer{background:var(--charcoal);padding:72px 64px 44px;}
 <div class="upload-toast" id="uploadToast"></div>
 <input type="file" id="gfi" accept="image/*,video/*"/>
 <div class="save-toast" id="saveToast"></div>
+<div id="statusBar" style="position:fixed;top:0;left:0;right:0;background:rgba(13,27,75,.95);color:#C9A84C;font-family:monospace;font-size:12px;padding:8px 16px;z-index:99999;text-align:center;border-bottom:1px solid #C9A84C;">
+  Connecting to database...
+</div>
 
 <div class="edit-banner" id="editBanner">✎ Edit Mode — Click any text to edit <button class="save-btn" onclick="saveAll()">Save All Changes</button></div>
 
@@ -467,12 +470,12 @@ footer{background:var(--charcoal);padding:72px 64px 44px;}
 <section id="about">
   <div class="wrap">
     <div class="about-grid">
-      <div class="about-frame anim-left">
+      <div class="about-frame">
         <img class="about-img-el" id="aboutImg" src="" alt="Jannix Sakaula — Creative Director and Youth Advocate, Zambia" style="display:none"/>
         <div class="about-img-ph" id="aboutPh"></div>
         <div class="about-upload-z" id="aboutUpZ" onclick="triggerUpload('about','about-portrait')"><span>⬆<br/>Replace Photo</span></div>
       </div>
-      <div class="about-text anim-right">
+      <div class="about-text">
         <p class="eyebrow">About Me</p>
         <h2 class="sec-title">Where Vision<br/><em>Meets Craft</em></h2>
         <div class="about-body">
@@ -492,9 +495,9 @@ footer{background:var(--charcoal);padding:72px 64px 44px;}
 <section id="elevare">
   <div class="wrap" style="position:relative">
     <p class="eyebrow" style="color:var(--gold)">Services</p>
-    <h2 class="sec-title anim-up">Elevare <em>Creative</em></h2>
-    <p class="elevare-sub anim-up eb" id="elevareIntro">We elevate — your brand, your story, your presence. Elevare Creative is a full-service creative studio offering thoughtfully crafted work across design, photography, video, and content. Click any service to explore the work.</p>
-    <div class="services-grid anim-up">
+    <h2 class="sec-title">Elevare <em>Creative</em></h2>
+    <p class="elevare-sub eb" id="elevareIntro">We elevate — your brand, your story, your presence. Elevare Creative is a full-service creative studio offering thoughtfully crafted work across design, photography, video, and content. Click any service to explore the work.</p>
+    <div class="services-grid">
       <div class="svc-card" onclick="openGallery('graphic-design','Graphic Design')">
         <span class="svc-icon">✦</span><span class="svc-num">01</span>
         <p class="svc-name eb" id="svc1name">Graphic Design</p>
@@ -536,11 +539,11 @@ footer{background:var(--charcoal);padding:72px 64px 44px;}
       <div><p class="eyebrow">Portfolio</p><h2 class="sec-title">Selected <em>Work</em></h2></div>
     </div>
     <div class="proj-grid" id="projGrid">
-      <div class="proj-card anim-up" data-index="0"><div class="proj-media-ph" id="proj-media-0">EDITORIAL</div><div class="proj-ov"><div><p class="proj-cat eb" id="pcat0">Photography</p><h3 class="proj-title eb" id="ptitle0">Golden Hour Editorial</h3><p class="proj-cap eb" id="pcap0">A portrait series exploring light, identity, and stillness.</p></div></div><div class="proj-arrow">↗</div><div class="card-ec"><button class="ec-btn" onclick="triggerUpload('project','proj-0')">Replace</button><button class="ec-btn del" onclick="removeProj(this)">Remove</button></div></div>
-      <div class="proj-card anim-up" data-index="1"><div class="proj-media-ph" id="proj-media-1">BRAND</div><div class="proj-ov"><div><p class="proj-cat eb" id="pcat1">Brand Identity</p><h3 class="proj-title eb" id="ptitle1">Luxe Brand System</h3><p class="proj-cap eb" id="pcap1">End-to-end brand design for a luxury lifestyle label.</p></div></div><div class="proj-arrow">↗</div><div class="card-ec"><button class="ec-btn" onclick="triggerUpload('project','proj-1')">Replace</button><button class="ec-btn del" onclick="removeProj(this)">Remove</button></div></div>
-      <div class="proj-card anim-up" data-index="2"><div class="proj-media-ph" id="proj-media-2">FILM</div><div class="proj-ov"><div><p class="proj-cat eb" id="pcat2">Videography</p><h3 class="proj-title eb" id="ptitle2">Youth Voices Film</h3><p class="proj-cap eb" id="pcap2">A short documentary on young leaders shaping tomorrow.</p></div></div><div class="proj-arrow">↗</div><div class="card-ec"><button class="ec-btn" onclick="triggerUpload('project','proj-2')">Replace</button><button class="ec-btn del" onclick="removeProj(this)">Remove</button></div></div>
-      <div class="proj-card anim-up" data-index="3"><div class="proj-media-ph" id="proj-media-3">CONTENT</div><div class="proj-ov"><div><p class="proj-cat eb" id="pcat3">Content Creation</p><h3 class="proj-title eb" id="ptitle3">Social Campaign</h3><p class="proj-cap eb" id="pcap3">Multi-platform campaign reaching 200K+ organic impressions.</p></div></div><div class="proj-arrow">↗</div><div class="card-ec"><button class="ec-btn" onclick="triggerUpload('project','proj-3')">Replace</button><button class="ec-btn del" onclick="removeProj(this)">Remove</button></div></div>
-      <div class="proj-card anim-up" data-index="4"><div class="proj-media-ph" id="proj-media-4">DESIGN</div><div class="proj-ov"><div><p class="proj-cat eb" id="pcat4">Graphic Design</p><h3 class="proj-title eb" id="ptitle4">Print Collection</h3><p class="proj-cap eb" id="pcap4">A series of editorial posters for a cultural event series.</p></div></div><div class="proj-arrow">↗</div><div class="card-ec"><button class="ec-btn" onclick="triggerUpload('project','proj-4')">Replace</button><button class="ec-btn del" onclick="removeProj(this)">Remove</button></div></div>
+      <div class="proj-card" data-index="0"><div class="proj-media-ph" id="proj-media-0">EDITORIAL</div><div class="proj-ov"><div><p class="proj-cat eb" id="pcat0">Photography</p><h3 class="proj-title eb" id="ptitle0">Golden Hour Editorial</h3><p class="proj-cap eb" id="pcap0">A portrait series exploring light, identity, and stillness.</p></div></div><div class="proj-arrow">↗</div><div class="card-ec"><button class="ec-btn" onclick="triggerUpload('project','proj-0')">Replace</button><button class="ec-btn del" onclick="removeProj(this)">Remove</button></div></div>
+      <div class="proj-card" data-index="1"><div class="proj-media-ph" id="proj-media-1">BRAND</div><div class="proj-ov"><div><p class="proj-cat eb" id="pcat1">Brand Identity</p><h3 class="proj-title eb" id="ptitle1">Luxe Brand System</h3><p class="proj-cap eb" id="pcap1">End-to-end brand design for a luxury lifestyle label.</p></div></div><div class="proj-arrow">↗</div><div class="card-ec"><button class="ec-btn" onclick="triggerUpload('project','proj-1')">Replace</button><button class="ec-btn del" onclick="removeProj(this)">Remove</button></div></div>
+      <div class="proj-card" data-index="2"><div class="proj-media-ph" id="proj-media-2">FILM</div><div class="proj-ov"><div><p class="proj-cat eb" id="pcat2">Videography</p><h3 class="proj-title eb" id="ptitle2">Youth Voices Film</h3><p class="proj-cap eb" id="pcap2">A short documentary on young leaders shaping tomorrow.</p></div></div><div class="proj-arrow">↗</div><div class="card-ec"><button class="ec-btn" onclick="triggerUpload('project','proj-2')">Replace</button><button class="ec-btn del" onclick="removeProj(this)">Remove</button></div></div>
+      <div class="proj-card" data-index="3"><div class="proj-media-ph" id="proj-media-3">CONTENT</div><div class="proj-ov"><div><p class="proj-cat eb" id="pcat3">Content Creation</p><h3 class="proj-title eb" id="ptitle3">Social Campaign</h3><p class="proj-cap eb" id="pcap3">Multi-platform campaign reaching 200K+ organic impressions.</p></div></div><div class="proj-arrow">↗</div><div class="card-ec"><button class="ec-btn" onclick="triggerUpload('project','proj-3')">Replace</button><button class="ec-btn del" onclick="removeProj(this)">Remove</button></div></div>
+      <div class="proj-card" data-index="4"><div class="proj-media-ph" id="proj-media-4">DESIGN</div><div class="proj-ov"><div><p class="proj-cat eb" id="pcat4">Graphic Design</p><h3 class="proj-title eb" id="ptitle4">Print Collection</h3><p class="proj-cap eb" id="pcap4">A series of editorial posters for a cultural event series.</p></div></div><div class="proj-arrow">↗</div><div class="card-ec"><button class="ec-btn" onclick="triggerUpload('project','proj-4')">Replace</button><button class="ec-btn del" onclick="removeProj(this)">Remove</button></div></div>
       <div class="proj-card add-proj" onclick="addProj()"><div class="add-proj-in"><span>+</span>Add New Project</div></div>
     </div>
   </div>
@@ -727,7 +730,7 @@ function initAnimations(){
     const sc=document.getElementById('heroScroll');
     if(sc){sc.style.transition='opacity .8s';sc.style.opacity='1';}
   },1800);
-  setupScrollAnims();
+  // scroll anims removed for stability
   setupCounters();
 }
 
@@ -936,7 +939,7 @@ let blogPosts=[];
 function renderBlog(){
   const g=document.getElementById('blogGrid');
   if(!blogPosts.length){g.innerHTML='<p style="font-family:var(--fp);color:var(--text-light);font-style:italic">No posts yet.</p>';return;}
-  g.innerHTML=blogPosts.map(p=>'<div class="blog-card anim-up in"><div class="blog-card-ctrl"><button class="ec-btn del" onclick="deletePost(''+p.id+'')">Delete</button></div><p class="blog-date">'+(p.date||'')+' · '+(p.cat||'Youth Advocacy')+'</p><h3 class="blog-title">'+p.title+'</h3><p class="blog-excerpt">'+p.excerpt+'</p><div class="blog-rm" onclick="openBlogModal(''+p.id+'')">Continue Reading</div></div>').join('');
+  g.innerHTML=blogPosts.map(p=>'<div class="blog-card in"><div class="blog-card-ctrl"><button class="ec-btn del" onclick="deletePost(''+p.id+'')">Delete</button></div><p class="blog-date">'+(p.date||'')+' · '+(p.cat||'Youth Advocacy')+'</p><h3 class="blog-title">'+p.title+'</h3><p class="blog-excerpt">'+p.excerpt+'</p><div class="blog-rm" onclick="openBlogModal(''+p.id+'')">Continue Reading</div></div>').join('');
 }
 function openBlogModal(id){
   const p=blogPosts.find(x=>String(x.id)===String(id));if(!p)return;
@@ -973,31 +976,48 @@ async function publishPost(){
 
 /* ── LOAD DB ── */
 async function loadDB(){
+  const sb = document.getElementById('statusBar');
+  const setStatus = (msg, color) => {
+    if(sb){ sb.textContent = msg; sb.style.color = color || '#C9A84C'; }
+  };
   try{
-    const d=await api('/load');
-    if(!d||d.error)return;
+    setStatus('Loading your content from database...');
+    const d = await api('/load');
+    
+    if(!d){ setStatus('ERROR: API returned nothing', '#ff4444'); renderBlog(); return; }
+    if(d.error){ setStatus('DB ERROR: ' + d.error, '#ff4444'); renderBlog(); return; }
+    
+    const keyCount = d.content ? Object.keys(d.content).length : 0;
+    setStatus('DB connected! Applying ' + keyCount + ' items...');
+    
+    let applied = 0;
     if(d.content){
       Object.entries(d.content).forEach(([id,v])=>{
         if(id.startsWith('_'))return;
         const el=document.getElementById(id);
-        if(el&&v)el.innerHTML=v;
+        if(el&&v){ el.innerHTML=v; applied++; }
       });
-      // Apply social links to contact section icons
+      // Apply social links
       const socialMap={socialIG:'cIG',socialTT:'cTT',socialLI:'cLI',socialFB:'cFB',socialYT:'cYT'};
       Object.entries(socialMap).forEach(([key,elId])=>{
         const val=d.content[key];
-        const footEl=document.getElementById(key);
-        const contactEl=document.getElementById(elId);
-        if(val&&footEl)footEl.href=val;
-        if(val&&contactEl)contactEl.href=val;
+        if(val&&document.getElementById(key)) document.getElementById(key).href=val;
+        if(val&&document.getElementById(elId)) document.getElementById(elId).href=val;
       });
     }
-    if(d.media&&d.media.length)d.media.forEach(m=>applyMedia(m.section,m.slot_key,m.url,m.resource_type));
-    if(d.gallery)galleryData=d.gallery.map(i=>({id:i.id,category:i.category,url:i.url,resource_type:i.resource_type,caption:i.caption||''}));
-    if(d.posts&&d.posts.length)blogPosts=d.posts.map(p=>({id:p.id,date:p.post_date,cat:p.category,title:p.title,excerpt:p.excerpt,content:p.content}));
+    
+    if(d.media&&d.media.length) d.media.forEach(m=>applyMedia(m.section,m.slot_key,m.url,m.resource_type));
+    if(d.gallery) galleryData=d.gallery.map(i=>({id:i.id,category:i.category,url:i.url,resource_type:i.resource_type,caption:i.caption||''}));
+    if(d.posts&&d.posts.length) blogPosts=d.posts.map(p=>({id:p.id,date:p.post_date,cat:p.category,title:p.title,excerpt:p.excerpt,content:p.content}));
+    
     renderBlog();
+    setStatus('✓ Content loaded! Applied ' + applied + ' items. Keys: ' + keyCount + ' | Posts: ' + (d.posts||[]).length + ' | Media: ' + (d.media||[]).length, '#4caf50');
+    // Hide status bar after 5 seconds
+    setTimeout(()=>{ if(sb) sb.style.display='none'; }, 5000);
+    
   }catch(err){
-    console.error('DB load failed:',err.message);
+    setStatus('FAILED: ' + err.message + ' — check browser console', '#ff4444');
+    console.error('DB load failed:',err);
     renderBlog();
   }
 }
