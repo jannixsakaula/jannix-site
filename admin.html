@@ -541,7 +541,7 @@ async function cloudUpload(file, progressId) {
   const fill = prog ? document.getElementById(progressId + 'Fill') : null;
   if (prog) { prog.style.display = 'block'; }
   if (fill) { fill.style.width = '10%'; }
-  const { signature, timestamp, folder, api_key } = await api('/cloudinary-sign', 'POST', {});
+  const { signature, timestamp, folder, api_key } = await api('/sign', 'POST', {});
   if (fill) fill.style.width = '30%';
   const fd = new FormData();
   fd.append('file', file); fd.append('api_key', api_key);
@@ -577,7 +577,7 @@ document.getElementById('fileInput').addEventListener('change', async e => {
     if (uploadTarget.type === 'media') {
       const progId = uploadTarget.section === 'hero' ? 'heroProgress' : 'galProgress';
       const { url, public_id, resource_type } = await cloudUpload(file, progId);
-      await api('/save-media', 'POST', {
+      await api('/media', 'POST', {
         section: uploadTarget.section,
         slot_key: uploadTarget.slot,
         url, resource_type, public_id
@@ -636,7 +636,7 @@ async function saveAllContent() {
     content[dbKey] = type === 'html' ? el.innerHTML : el.value;
   });
   try {
-    const result = await api('/save-all-content', 'POST', { content });
+    const result = await api('/save', 'POST', { content });
     if (result.ok) {
       toast('✓ Saved! Changes are now live on jannixsakaula.com');
     } else {
@@ -662,7 +662,7 @@ async function saveSocialLinks() {
     if (el && el.value.trim()) links[key] = el.value.trim();
   });
   try {
-    const result = await api('/save-all-content', 'POST', { content: links });
+    const result = await api('/save', 'POST', { content: links });
     if (result.ok) {
       toast('✓ Social links saved and live on your site!');
     } else {
@@ -834,7 +834,7 @@ async function saveProjectTexts() {
     if (cap && cap.value.trim()) content['pcap'+i] = cap.value.trim();
   });
   try {
-    const result = await api('/save-all-content', 'POST', { content });
+    const result = await api('/save', 'POST', { content });
     if (result.ok) {
       toast('✓ Project texts saved and live on your site!');
     } else {
@@ -850,7 +850,7 @@ async function testConnection() {
   toast('Testing database connection...');
   try {
     // Step 1: Try to write a test value
-    const saveResult = await api('/save-all-content', 'POST', {
+    const saveResult = await api('/save', 'POST', {
       content: { _test: 'connection_ok_' + Date.now() }
     });
     if (!saveResult.ok) {
