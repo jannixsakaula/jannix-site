@@ -37,16 +37,16 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-body{font-family:var(--fb);background:var(--ivory);color:var(--text-dark);overflow-x:hidden;cursor:none;}
+body{font-family:var(--fb);background:var(--ivory);color:var(--text-dark);overflow-x:hidden;}
 img,video{max-width:100%;display:block;}
 a{color:inherit;text-decoration:none;}
 ul{list-style:none;}
 
 /* ── CURSOR ── */
-.c-dot{width:8px;height:8px;background:var(--gold);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:10001;transform:translate(-50%,-50%);transition:transform .1s;}
-.c-ring{width:40px;height:40px;border:1.5px solid rgba(201,168,76,.7);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:10000;transform:translate(-50%,-50%);transition:width .4s var(--expo),height .4s var(--expo),border-color .4s,background .4s;}
-.c-ring.hovering{width:64px;height:64px;background:rgba(201,168,76,.08);border-color:var(--gold);}
-.c-trail{position:fixed;width:6px;height:6px;border-radius:50%;background:rgba(201,168,76,.3);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
+
+
+
+
 
 /* ── NOISE ── */
 body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.35;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");}
@@ -346,9 +346,7 @@ footer{background:var(--charcoal);padding:72px 64px 44px;}
 </head>
 <body>
 
-<!-- CURSOR -->
-<div class="c-dot" id="cDot"></div>
-<div class="c-ring" id="cRing"></div>
+
 
 
 
@@ -706,17 +704,7 @@ function setupCounters(){
   document.querySelectorAll('.stat-number').forEach(el=>obs.observe(el));
 }
 
-/* ── CURSOR ── */
-const cDot=document.getElementById('cDot'),cRing=document.getElementById('cRing');
-let mx=0,my=0,rx=0,ry=0;
-const trails=[];
-for(let i=0;i<6;i++){const t=document.createElement('div');t.className='c-trail';document.body.appendChild(t);trails.push({el:t,x:0,y:0});}
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cDot.style.left=mx+'px';cDot.style.top=my+'px';});
-(function animCursor(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;cRing.style.left=rx+'px';cRing.style.top=ry+'px';trails.forEach((t,i)=>{const prev=i===0?{x:rx,y:ry}:trails[i-1];t.x+=(prev.x-t.x)*(0.28-i*.03);t.y+=(prev.y-t.y)*(0.28-i*.03);t.el.style.left=t.x+'px';t.el.style.top=t.y+'px';t.el.style.opacity=String((6-i)/12);});requestAnimationFrame(animCursor);})();
-document.querySelectorAll('a,button,.svc-card,.proj-card,.blog-card').forEach(el=>{
-  el.addEventListener('mouseenter',()=>cRing.classList.add('hovering'));
-  el.addEventListener('mouseleave',()=>cRing.classList.remove('hovering'));
-});
+/* ── CURSOR ── (custom cursor removed - using system cursor for reliability) */
 
 /* ── NAV ── */
 window.addEventListener('scroll',()=>document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>60));
@@ -724,12 +712,14 @@ window.addEventListener('scroll',()=>{const hm=document.getElementById('heroMedi
 
 /* ── API ── */
 async function api(path,method='GET',body=null){
-  const o={method,headers:{'Content-Type':'application/json'}};
+  const o={method,headers:{'Content-Type':'application/json','Cache-Control':'no-cache'}};
   if(body)o.body=JSON.stringify(body);
   const controller=new AbortController();
   const timer=setTimeout(()=>controller.abort(),10000);
   try{
-    const r=await fetch('/api'+path,{...o,signal:controller.signal});
+    // Add timestamp to bust cache on GET requests
+    const url='/api'+path+(method==='GET'?'?t='+Date.now():'');
+    const r=await fetch(url,{...o,signal:controller.signal,cache:'no-store'});
     clearTimeout(timer);
     const text=await r.text();
     return JSON.parse(text);
