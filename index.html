@@ -729,7 +729,7 @@ async function api(path,method='GET',body=null){
 /* ── CLOUDINARY ── */
 async function cloudUpload(file){
   showUpload('Uploading...');setProgress(15);
-  const {signature,timestamp,folder,api_key}=await api('/cloudinary-sign','POST',{});
+  const {signature,timestamp,folder,api_key}=await api('/sign','POST',{});
   setProgress(35);
   const fd=new FormData();
   fd.append('file',file);fd.append('api_key',api_key);fd.append('timestamp',timestamp);fd.append('signature',signature);fd.append('folder',folder);
@@ -772,7 +772,7 @@ async function saveAll(){
   const ids=['heroEyebrow','heroTagline','aboutP1','aboutP2','aboutP3','elevareIntro','svc1name','svc1desc','svc2name','svc2desc','svc3name','svc3desc','svc4name','svc4desc','advTitle','advDesc','contactIntro','contactEmail','contactLoc','footQuote','pcat0','ptitle0','pcap0','pcat1','ptitle1','pcap1','pcat2','ptitle2','pcap2','pcat3','ptitle3','pcap3','pcat4','ptitle4','pcap4'];
   const c={};
   ids.forEach(id=>{const el=document.getElementById(id);if(el)c[id]=el.innerHTML;});
-  await api('/save-all-content','POST',{content:c});
+  await api('/save','POST',{content:c});
   showToast('Saved — live on every device!');
 }
 function showToast(m){const t=document.getElementById('saveToast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3200);}
@@ -790,7 +790,7 @@ document.getElementById('gfi').addEventListener('change',async e=>{
     galleryData.push({id:item.id,category:upGalCat,url,resource_type,caption});
     if(document.getElementById('galleryOverlay').classList.contains('open'))renderGallery(upGalCat);
   }else{
-    await api('/save-media','POST',{section:upSection,slot_key:upSlot,url,resource_type,public_id});
+    await api('/media','POST',{section:upSection,slot_key:upSlot,url,resource_type,public_id});
     applyMedia(upSection,upSlot,url,resource_type);
   }
   e.target.value='';
