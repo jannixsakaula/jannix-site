@@ -1,9 +1,9 @@
 {
   "rewrites": [
     { "source": "/api/load", "destination": "/api/load" },
-    { "source": "/api/save-all-content", "destination": "/api/save" },
-    { "source": "/api/cloudinary-sign", "destination": "/api/sign" },
-    { "source": "/api/save-media", "destination": "/api/media" },
+    { "source": "/api/save", "destination": "/api/save" },
+    { "source": "/api/sign", "destination": "/api/sign" },
+    { "source": "/api/media", "destination": "/api/media" },
     { "source": "/api/gallery/:id", "destination": "/api/gallery" },
     { "source": "/api/gallery", "destination": "/api/gallery" },
     { "source": "/api/blog/:id", "destination": "/api/blog" },
