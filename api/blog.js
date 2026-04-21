@@ -1,5 +1,13 @@
 const { neon } = require('@neondatabase/serverless');
 
+function parseBody(req) {
+  if (!req || req.body == null) return {};
+  if (typeof req.body === 'string') {
+    try { return JSON.parse(req.body); } catch { return {}; }
+  }
+  return req.body;
+}
+
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -8,7 +16,7 @@ module.exports = async (req, res) => {
   try {
     const sql = neon(process.env.DATABASE_URL);
     if (req.method === 'POST') {
-      const { title, excerpt, content, category, post_date } = req.body || {};
+      const { title, excerpt, content, category, post_date } = parseBody(req);
       const [post] = await sql`INSERT INTO blog_posts (title,excerpt,content,category,post_date) VALUES (${title},${excerpt},${content},${category||'Youth Advocacy'},${post_date||''}) RETURNING *`;
       return res.json(post);
     }
