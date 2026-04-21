@@ -1,4 +1,3 @@
- (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' 
 diff --git a/api/save.js b/api/save.js
 index 1bc6e16d17ed7a176b1afd2878539b1983413ab1..14a4ba2be86689d41d30ea762a76be19af54de4c 100644
 --- a/api/save.js
@@ -41,6 +40,3 @@ index 1bc6e16d17ed7a176b1afd2878539b1983413ab1..14a4ba2be86689d41d30ea762a76be19
      return res.status(500).json({ error: err.message });
    }
  };
- 
-EOF
-)
