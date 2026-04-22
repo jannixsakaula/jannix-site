@@ -637,13 +637,18 @@ async function saveAllContent() {
   });
   try {
     const result = await api('/save', 'POST', { content });
+    console.log('Save result:', result);
     if (result.ok) {
-      toast('✓ Saved! Changes are now live on jannixsakaula.com');
+      toast('✓ Saved ' + result.saved + ' items to database!');
+    } else if (result.error) {
+      toast('DB Error: ' + result.error);
+      console.error('Save error:', result);
     } else {
-      toast('Something went wrong. Try again.');
+      toast('Unexpected response: ' + JSON.stringify(result).substring(0,100));
     }
   } catch(e) {
-    toast('Error saving. Check your internet connection.');
+    console.error('Save failed:', e);
+    toast('Network error: ' + e.message);
   }
 }
 
