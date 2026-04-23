@@ -672,10 +672,11 @@ const CLOUD='dgsi6tlxe';
 const PASS='Sakaula@2008';
 
 /* ── INIT ── */
-// No loader - page shows immediately, DB loads in background
+// Run immediately when DOM ready, but give browser one frame to paint first
 window.addEventListener('DOMContentLoaded', () => {
   initAnimations();
-  loadDB();
+  // Small delay so browser paints the page before we update it
+  setTimeout(() => loadDB(), 100);
 });
 
 /* ── ANIMATIONS ── */
