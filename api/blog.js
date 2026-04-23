@@ -13,6 +13,12 @@ module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   res.setHeader('Access-Control-Allow-Methods', 'POST, DELETE, OPTIONS');
   if (req.method === 'OPTIONS') return res.status(200).end();
+
+  // Verify admin token
+  const token = req.headers['x-admin-token'] || '';
+  if (token !== (process.env.ADMIN_TOKEN || 'elevare-admin-tok-2025-js')) {
+    return res.status(403).json({ error: 'Unauthorized' });
+  }
   try {
     const sql = neon(process.env.DATABASE_URL);
     if (req.method === 'POST') {
