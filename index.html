@@ -67,7 +67,6 @@ nav.scrolled{background:rgba(13,27,75,.96);backdrop-filter:blur(20px);padding:16
 .nav-links a::after{content:'';position:absolute;bottom:-4px;left:50%;width:0;height:1px;background:var(--gold);transition:all .4s var(--expo);transform:translateX(-50%);}
 .nav-links a:hover{color:var(--gold-light);}
 .nav-links a:hover::after{width:100%;}
-.nav-edit-btn{display:none !important;}
 
 /* ── HERO ── */
 #hero{height:100vh;min-height:700px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#050d2a;}
@@ -141,9 +140,7 @@ section{padding:130px 0;}
 .tag:hover{background:var(--gold);color:white;}
 
 /* ── EDITABLE ── */
-.eb{outline:none;transition:background .3s,box-shadow .3s;}
-.edit-mode .eb{background:rgba(201,168,76,.07);box-shadow:0 0 0 2px rgba(201,168,76,.35);cursor:text;border-radius:2px;}
-.edit-mode .eb:focus{background:rgba(201,168,76,.13);box-shadow:0 0 0 2px var(--gold);}
+.eb{outline:none;}
 
 /* ── ELEVARE / SERVICES ── */
 #elevare{background:var(--royal);position:relative;overflow:hidden;}
@@ -314,27 +311,6 @@ footer{background:var(--charcoal);padding:72px 64px 44px;}
 .bf textarea{min-height:200px;resize:vertical;line-height:1.8;}
 .bf-actions{margin-top:28px;display:flex;gap:12px;}
 
-/* ── ADMIN LOGIN ── */
-.admin-ov{position:fixed;inset:0;z-index:5000;background:rgba(5,13,42,.98);backdrop-filter:blur(24px);display:none;align-items:center;justify-content:center;}
-.admin-ov.open{display:flex;}
-.admin-box{background:var(--ivory);padding:64px 56px;max-width:420px;width:100%;border-top:3px solid var(--gold);text-align:center;}
-.admin-box h2{font-family:var(--fd);font-size:1.3rem;letter-spacing:.1em;color:var(--royal);margin-bottom:8px;}
-.admin-box p{font-family:var(--fp);font-style:italic;font-size:1rem;color:var(--text-light);margin-bottom:34px;}
-.admin-box input{width:100%;font-family:var(--fp);font-size:1rem;color:var(--text-dark);background:var(--ivory-warm);border:1px solid var(--ivory-deep);border-bottom:2px solid var(--ivory-deep);padding:14px 18px;outline:none;text-align:center;letter-spacing:.1em;margin-bottom:16px;transition:border-color .3s;}
-.admin-box input:focus{border-color:var(--gold);}
-.login-err{font-family:var(--fd);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:#c04040;margin-bottom:16px;display:none;}
-.login-err.show{display:block;}
-.admin-cancel{font-family:var(--fd);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-light);background:none;border:none;cursor:pointer;margin-top:16px;transition:color .3s;}
-.admin-cancel:hover{color:var(--royal);}
-
-/* ── EDIT BANNER ── */
-.edit-banner{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--royal);font-family:var(--fd);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;padding:13px 34px;display:none;align-items:center;gap:12px;z-index:5000;box-shadow:0 10px 48px rgba(201,168,76,.55);white-space:nowrap;}
-.edit-banner.visible{display:flex;}
-.save-btn{background:var(--royal);color:var(--gold);border:none;font-family:var(--fd);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;padding:7px 18px;cursor:pointer;margin-left:8px;transition:background .3s;}
-.save-btn:hover{background:var(--charcoal);}
-.save-toast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%);background:var(--royal);color:var(--ivory);font-family:var(--fd);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;padding:11px 30px;z-index:6000;opacity:0;transition:opacity .4s;pointer-events:none;border:1px solid var(--gold);}
-.save-toast.show{opacity:1;}
-#gfi{display:none;}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(32px);}to{opacity:1;transform:translateY(0);}}
 @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
@@ -350,26 +326,7 @@ footer{background:var(--charcoal);padding:72px 64px 44px;}
 
 
 
-<div class="progress-bar" id="progressBar"></div>
-<div class="upload-toast" id="uploadToast"></div>
-<input type="file" id="gfi" accept="image/*,video/*"/>
-<div class="save-toast" id="saveToast"></div>
-<div id="dbStatus" style="position:fixed;bottom:10px;right:10px;background:rgba(13,27,75,.95);color:#C9A84C;font-family:monospace;font-size:11px;padding:8px 14px;z-index:99999;border:1px solid rgba(201,168,76,.4);max-width:300px;word-break:break-word;display:none;"></div>
 
-
-<div class="edit-banner" id="editBanner">✎ Edit Mode — Click any text to edit <button class="save-btn" onclick="saveAll()">Save All Changes</button></div>
-
-<!-- ADMIN LOGIN -->
-<div class="admin-ov" id="adminOv">
-  <div class="admin-box">
-    <h2>Admin Access</h2>
-    <p>Enter your password to edit</p>
-    <p class="login-err" id="loginErr">Incorrect password.</p>
-    <input type="password" id="pwInput" placeholder="Password" onkeydown="if(event.key==='Enter')doLogin()"/>
-    <button class="btn-p" style="width:100%" onclick="doLogin()">Enter</button><br/>
-    <button class="admin-cancel" onclick="closeLogin()">Cancel</button>
-  </div>
-</div>
 
 <!-- SERVICE GALLERY OVERLAY -->
 <div class="gallery-overlay" id="galleryOverlay">
@@ -401,7 +358,7 @@ footer{background:var(--charcoal);padding:72px 64px 44px;}
     <a href="#blog">Blog</a>
     <a href="#contact">Contact</a>
   </div>
-  <button class="nav-edit-btn" id="editBtn" onclick="requestEdit()">Edit Site</button>
+
 </nav>
 
 <!-- HERO -->
@@ -411,9 +368,7 @@ footer{background:var(--charcoal);padding:72px 64px 44px;}
   <div class="hero-lines-deco"></div>
   <div class="hero-corner-deco"></div>
   <div class="hero-media" id="heroMedia"><div class="ph">JS</div></div>
-  <div class="hero-upload-ov" id="heroUpOv" onclick="triggerUpload('hero','hero-bg')">
-    <div class="upload-box"><i>⬆</i>Upload Hero Image or Video</div>
-  </div>
+
   <div class="hero-content">
     <div class="hero-eyebrow eb" id="heroEyebrow">Creative Director · Youth Advocate · Zambia</div>
     <div class="hero-name-wrap"><div class="hero-name" id="heroName1">Jannix</div></div>
@@ -456,7 +411,6 @@ footer{background:var(--charcoal);padding:72px 64px 44px;}
       <div class="about-frame">
         <img class="about-img-el" id="aboutImg" src="" alt="Jannix Sakaula — Creative Director and Youth Advocate, Zambia" style="display:none"/>
         <div class="about-img-ph" id="aboutPh"></div>
-        <div class="about-upload-z" id="aboutUpZ" onclick="triggerUpload('about','about-portrait')"><span>⬆<br/>Replace Photo</span></div>
       </div>
       <div class="about-text">
         <p class="eyebrow">About Me</p>
@@ -522,12 +476,11 @@ footer{background:var(--charcoal);padding:72px 64px 44px;}
       <div><p class="eyebrow">Portfolio</p><h2 class="sec-title">Selected <em>Work</em></h2></div>
     </div>
     <div class="proj-grid" id="projGrid">
-      <div class="proj-card" data-index="0"><div class="proj-media-ph" id="proj-media-0">EDITORIAL</div><div class="proj-ov"><div><p class="proj-cat eb" id="pcat0">Photography</p><h3 class="proj-title eb" id="ptitle0">Golden Hour Editorial</h3><p class="proj-cap eb" id="pcap0">A portrait series exploring light, identity, and stillness.</p></div></div><div class="proj-arrow">↗</div><div class="card-ec"><button class="ec-btn" onclick="triggerUpload('project','proj-0')">Replace</button><button class="ec-btn del" onclick="removeProj(this)">Remove</button></div></div>
-      <div class="proj-card" data-index="1"><div class="proj-media-ph" id="proj-media-1">BRAND</div><div class="proj-ov"><div><p class="proj-cat eb" id="pcat1">Brand Identity</p><h3 class="proj-title eb" id="ptitle1">Luxe Brand System</h3><p class="proj-cap eb" id="pcap1">End-to-end brand design for a luxury lifestyle label.</p></div></div><div class="proj-arrow">↗</div><div class="card-ec"><button class="ec-btn" onclick="triggerUpload('project','proj-1')">Replace</button><button class="ec-btn del" onclick="removeProj(this)">Remove</button></div></div>
-      <div class="proj-card" data-index="2"><div class="proj-media-ph" id="proj-media-2">FILM</div><div class="proj-ov"><div><p class="proj-cat eb" id="pcat2">Videography</p><h3 class="proj-title eb" id="ptitle2">Youth Voices Film</h3><p class="proj-cap eb" id="pcap2">A short documentary on young leaders shaping tomorrow.</p></div></div><div class="proj-arrow">↗</div><div class="card-ec"><button class="ec-btn" onclick="triggerUpload('project','proj-2')">Replace</button><button class="ec-btn del" onclick="removeProj(this)">Remove</button></div></div>
-      <div class="proj-card" data-index="3"><div class="proj-media-ph" id="proj-media-3">CONTENT</div><div class="proj-ov"><div><p class="proj-cat eb" id="pcat3">Content Creation</p><h3 class="proj-title eb" id="ptitle3">Social Campaign</h3><p class="proj-cap eb" id="pcap3">Multi-platform campaign reaching 200K+ organic impressions.</p></div></div><div class="proj-arrow">↗</div><div class="card-ec"><button class="ec-btn" onclick="triggerUpload('project','proj-3')">Replace</button><button class="ec-btn del" onclick="removeProj(this)">Remove</button></div></div>
-      <div class="proj-card" data-index="4"><div class="proj-media-ph" id="proj-media-4">DESIGN</div><div class="proj-ov"><div><p class="proj-cat eb" id="pcat4">Graphic Design</p><h3 class="proj-title eb" id="ptitle4">Print Collection</h3><p class="proj-cap eb" id="pcap4">A series of editorial posters for a cultural event series.</p></div></div><div class="proj-arrow">↗</div><div class="card-ec"><button class="ec-btn" onclick="triggerUpload('project','proj-4')">Replace</button><button class="ec-btn del" onclick="removeProj(this)">Remove</button></div></div>
-      <div class="proj-card add-proj" onclick="addProj()"><div class="add-proj-in"><span>+</span>Add New Project</div></div>
+      <div class="proj-card" data-index="0"><div class="proj-media-ph" id="proj-media-0">EDITORIAL</div><div class="proj-ov"><div><p class="proj-cat eb" id="pcat0">Photography</p><h3 class="proj-title eb" id="ptitle0">Golden Hour Editorial</h3><p class="proj-cap eb" id="pcap0">A portrait series exploring light, identity, and stillness.</p></div></div><div class="proj-arrow">↗</div></div>
+      <div class="proj-card" data-index="1"><div class="proj-media-ph" id="proj-media-1">BRAND</div><div class="proj-ov"><div><p class="proj-cat eb" id="pcat1">Brand Identity</p><h3 class="proj-title eb" id="ptitle1">Luxe Brand System</h3><p class="proj-cap eb" id="pcap1">End-to-end brand design for a luxury lifestyle label.</p></div></div><div class="proj-arrow">↗</div></div>
+      <div class="proj-card" data-index="2"><div class="proj-media-ph" id="proj-media-2">FILM</div><div class="proj-ov"><div><p class="proj-cat eb" id="pcat2">Videography</p><h3 class="proj-title eb" id="ptitle2">Youth Voices Film</h3><p class="proj-cap eb" id="pcap2">A short documentary on young leaders shaping tomorrow.</p></div></div><div class="proj-arrow">↗</div></div>
+      <div class="proj-card" data-index="3"><div class="proj-media-ph" id="proj-media-3">CONTENT</div><div class="proj-ov"><div><p class="proj-cat eb" id="pcat3">Content Creation</p><h3 class="proj-title eb" id="ptitle3">Social Campaign</h3><p class="proj-cap eb" id="pcap3">Multi-platform campaign reaching 200K+ organic impressions.</p></div></div><div class="proj-arrow">↗</div></div>
+      <div class="proj-card" data-index="4"><div class="proj-media-ph" id="proj-media-4">DESIGN</div><div class="proj-ov"><div><p class="proj-cat eb" id="pcat4">Graphic Design</p><h3 class="proj-title eb" id="ptitle4">Print Collection</h3><p class="proj-cap eb" id="pcap4">A series of editorial posters for a cultural event series.</p></div></div><div class="proj-arrow">↗</div></div>
     </div>
   </div>
 </section>
@@ -560,7 +513,6 @@ footer{background:var(--charcoal);padding:72px 64px 44px;}
   <div class="wrap">
     <div class="blog-hdr">
       <div><p class="eyebrow">Youth Advocacy</p><h2 class="sec-title">The <em>Blog</em></h2></div>
-      <button class="blog-add-btn" onclick="openNewBlog()">+ Write New Post</button>
     </div>
     <div class="blog-grid" id="blogGrid"><p style="font-family:var(--fp);color:var(--text-light);font-style:italic">Loading...</p></div>
   </div>
@@ -621,8 +573,7 @@ footer{background:var(--charcoal);padding:72px 64px 44px;}
       <div class="foot-links"><h4>Navigate</h4><ul><li><a href="#about">About</a></li><li><a href="#elevare">Elevare Creative</a></li><li><a href="#projects">Work</a></li><li><a href="#blog">Blog</a></li><li><a href="#contact">Contact</a></li></ul></div>
       <div class="foot-links"><h4>Services</h4><ul><li><a href="#elevare" onclick="openGallery('graphic-design','Graphic Design');return false">Graphic Design</a></li><li><a href="#elevare" onclick="openGallery('photography','Photography');return false">Photography</a></li><li><a href="#elevare" onclick="openGallery('videography','Videography');return false">Videography</a></li><li><a href="#elevare" onclick="openGallery('content-creation','Content Creation');return false">Content Creation</a></li></ul></div>
     </div>
-    <!-- SECRET GOLD LINE - only you know what this does -->
-    <div id="secretLine" style="width:100%;height:20px;display:flex;align-items:center;justify-content:center;margin-bottom:8px;cursor:default;user-select:none;-webkit-tap-highlight-color:transparent;" title=""><div style="width:100%;height:2px;background:linear-gradient(90deg,transparent,rgba(201,168,76,0.35),transparent);pointer-events:none;"></div></div>
+    <div style="width:100%;height:20px;display:flex;align-items:center;justify-content:center;margin-bottom:8px;"><div style="width:100%;height:2px;background:linear-gradient(90deg,transparent,rgba(201,168,76,0.35),transparent);"></div></div>
     <div class="foot-bottom">
       <p>© 2025 Jannix Sakaula · Elevare Creative, Zambia. All rights reserved.</p>
       <div class="socials">
@@ -649,378 +600,378 @@ footer{background:var(--charcoal);padding:72px 64px 44px;}
 <!-- BLOG MODAL -->
 <div class="modal-ov" id="blogModal"><div class="modal-box"><button class="modal-x" onclick="closeBlogModal()">✕ Close</button><div id="blogMC"></div></div></div>
 
-<!-- NEW BLOG MODAL -->
-<div class="modal-ov" id="newBlogModal">
-  <div class="modal-box">
-    <button class="modal-x" onclick="closeNewBlog()">✕ Close</button>
-    <h2>Write New Post</h2><p class="m-meta">Youth Advocacy Blog</p>
-    <div class="bf">
-      <label>Post Title</label><input type="text" id="nbTitle" placeholder="Enter a powerful title..."/>
-      <label>Date</label><input type="text" id="nbDate" placeholder="e.g. March 2025"/>
-      <label>Category</label><input type="text" id="nbCat" placeholder="e.g. Youth Leadership"/>
-      <label>Write Your Post</label><textarea id="nbContent" placeholder="Share your thoughts...&#10;&#10;Separate paragraphs with a blank line."></textarea>
-    </div>
-    <div class="bf-actions">
-      <button class="btn-p" onclick="publishPost()">Publish Post</button>
-      <button class="btn-g" style="color:var(--text-dark);border-color:var(--ivory-deep)" onclick="closeNewBlog()">Cancel</button>
-    </div>
-  </div>
-</div>
+
 
 <script>
-const CLOUD='dgsi6tlxe';
-const PASS='Sakaula@2008';
-
-/* ── INIT ── */
-// Run immediately when DOM ready, but give browser one frame to paint first
-window.addEventListener('DOMContentLoaded', () => {
-  initAnimations();
-  // Small delay so browser paints the page before we update it
-  setTimeout(() => loadDB(), 100);
-});
-
-/* ── ANIMATIONS ── */
-function initAnimations(){
-  // Everything is visible by default via CSS
-  // No JS-controlled show/hide - just run counters
-  setupCounters();
-}
-
-function setupScrollAnims(){
-  const style=document.createElement('style');
-  style.textContent='.anim-up{opacity:1;transform:translateY(0);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);}.anim-left{opacity:1;transform:translateX(0);transition:opacity 1s cubic-bezier(.16,1,.3,1),transform 1s cubic-bezier(.16,1,.3,1);}.anim-right{opacity:1;transform:translateX(0);transition:opacity 1s cubic-bezier(.16,1,.3,1),transform 1s cubic-bezier(.16,1,.3,1);}'; // Elements visible by default
-  document.head.appendChild(style);
-  const obs=new IntersectionObserver(es=>es.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('in'),i*80);}),{threshold:.1});
-  document.querySelectorAll('.anim-up,.anim-left,.anim-right').forEach(el=>obs.observe(el));
-}
-
-function setupCounters(){
-  const obs=new IntersectionObserver(es=>es.forEach(e=>{
-    if(e.isIntersecting){
-      const el=e.target,target=parseInt(el.dataset.target),dur=1800;
-      const start=Date.now();
-      const tick=()=>{const p=Math.min((Date.now()-start)/dur,1);const ease=1-Math.pow(1-p,4);el.textContent=Math.round(ease*target);if(p<1)requestAnimationFrame(tick);};
-      tick();obs.unobserve(el);
-    }
-  }),{threshold:.5});
-  document.querySelectorAll('.stat-number').forEach(el=>obs.observe(el));
-}
-
-/* ── CURSOR ── (custom cursor removed - using system cursor for reliability) */
-
-/* ── NAV ── */
-window.addEventListener('scroll',()=>document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>60));
-window.addEventListener('scroll',()=>{const hm=document.getElementById('heroMedia');if(hm)hm.style.transform=`translateY(${window.scrollY*.35}px)`;});
+/* ========================================
+   JANNIX SAKAULA - MAIN SITE SCRIPT
+   Read-only display. All editing via /admin
+   ======================================== */
 
 /* ── API ── */
-async function api(path,method='GET',body=null){
-  const o={method,headers:{'Content-Type':'application/json','Cache-Control':'no-cache'}};
-  if(body)o.body=JSON.stringify(body);
-  const controller=new AbortController();
-  const timer=setTimeout(()=>controller.abort(),10000);
-  try{
-    // Add timestamp to bust cache on GET requests
-    const url='/api'+path+(method==='GET'?'?t='+Date.now():'');
-    const r=await fetch(url,{...o,signal:controller.signal,cache:'no-store'});
-    clearTimeout(timer);
-    const text=await r.text();
-    return JSON.parse(text);
-  }catch(e){clearTimeout(timer);throw e;}
+async function api(path) {
+  var url = '/api' + path + '?_t=' + Date.now();
+  var r = await fetch(url, { headers: { 'Cache-Control': 'no-cache' } });
+  var text = await r.text();
+  try { return JSON.parse(text); } catch(e) { throw new Error('Bad response: ' + text.substring(0,100)); }
 }
 
-/* ── CLOUDINARY ── */
-async function cloudUpload(file){
-  showUpload('Uploading...');setProgress(15);
-  const {signature,timestamp,folder,api_key}=await api('/sign','POST',{});
-  setProgress(35);
-  const fd=new FormData();
-  fd.append('file',file);fd.append('api_key',api_key);fd.append('timestamp',timestamp);fd.append('signature',signature);fd.append('folder',folder);
-  const r=await fetch(`https://api.cloudinary.com/v1_1/${CLOUD}/auto/upload`,{method:'POST',body:fd});
-  setProgress(85);const d=await r.json();setProgress(100);
-  setTimeout(()=>setProgress(0),700);showUpload('Uploaded!');setTimeout(hideUpload,2000);
-  return{url:d.secure_url,public_id:d.public_id,resource_type:d.resource_type};
-}
-function setProgress(p){document.getElementById('progressBar').style.width=p+'%';}
-function showUpload(m){const t=document.getElementById('uploadToast');t.textContent=m;t.classList.add('show');}
-function hideUpload(){document.getElementById('uploadToast').classList.remove('show');}
-
-/* ── ADMIN ── */
-let editMode=false;
-function requestEdit(){if(editMode){exitEdit();return;}document.getElementById('adminOv').classList.add('open');setTimeout(()=>document.getElementById('pwInput').focus(),200);}
-function doLogin(){
-  const v=document.getElementById('pwInput').value,e=document.getElementById('loginErr');
-  if(v===PASS){document.getElementById('adminOv').classList.remove('open');document.getElementById('pwInput').value='';e.classList.remove('show');enterEdit();}
-  else{e.classList.add('show');document.getElementById('pwInput').value='';document.getElementById('pwInput').focus();}
-}
-function closeLogin(){document.getElementById('adminOv').classList.remove('open');document.getElementById('pwInput').value='';document.getElementById('loginErr').classList.remove('show');}
-function enterEdit(){
-  editMode=true;document.body.classList.add('edit-mode');
-  document.getElementById('editBanner').classList.add('visible');
-  document.getElementById('heroUpOv').classList.add('visible');
-  document.getElementById('aboutUpZ').classList.add('visible');
-  document.querySelectorAll('.eb').forEach(el=>el.contentEditable='true');
-}
-function exitEdit(){
-  editMode=false;document.body.classList.remove('edit-mode');
-  document.getElementById('editBanner').classList.remove('visible');
-  document.getElementById('heroUpOv').classList.remove('visible');
-  document.getElementById('aboutUpZ').classList.remove('visible');
-  document.querySelectorAll('.eb').forEach(el=>el.contentEditable='false');
-}
-
-/* ── SAVE ── */
-async function saveAll(){
-  showToast('Saving...');
-  const ids=['heroEyebrow','heroTagline','aboutP1','aboutP2','aboutP3','elevareIntro','svc1name','svc1desc','svc2name','svc2desc','svc3name','svc3desc','svc4name','svc4desc','advTitle','advDesc','contactIntro','contactEmail','contactLoc','footQuote','pcat0','ptitle0','pcap0','pcat1','ptitle1','pcap1','pcat2','ptitle2','pcap2','pcat3','ptitle3','pcap3','pcat4','ptitle4','pcap4'];
-  const c={};
-  ids.forEach(id=>{const el=document.getElementById(id);if(el)c[id]=el.innerHTML;});
-  await api('/save','POST',{content:c});
-  showToast('Saved — live on every device!');
-}
-function showToast(m){const t=document.getElementById('saveToast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3200);}
-
-/* ── MEDIA UPLOAD ── */
-let upSection='',upSlot='',upGalCat='';
-function triggerUpload(section,slot){if(!editMode)return;upSection=section;upSlot=slot;upGalCat='';document.getElementById('gfi').click();}
-function triggerGalleryUpload(cat){if(!editMode)return;upSection='gallery';upSlot='';upGalCat=cat;document.getElementById('gfi').click();}
-document.getElementById('gfi').addEventListener('change',async e=>{
-  const file=e.target.files[0];if(!file)return;
-  const{url,public_id,resource_type}=await cloudUpload(file);
-  if(upSection==='gallery'){
-    const caption=prompt('Caption for this media (optional):','')||'';
-    const item=await api('/gallery','POST',{category:upGalCat,url,resource_type,public_id,caption});
-    galleryData.push({id:item.id,category:upGalCat,url,resource_type,caption});
-    if(document.getElementById('galleryOverlay').classList.contains('open'))renderGallery(upGalCat);
-  }else{
-    await api('/media','POST',{section:upSection,slot_key:upSlot,url,resource_type,public_id});
-    applyMedia(upSection,upSlot,url,resource_type);
-  }
-  e.target.value='';
-});
-
-function applyMedia(section,slot,url,rt){
-  if(section==='hero'){
-    const s=document.getElementById('heroMedia');s.innerHTML='';
-    if(rt==='video'){const v=document.createElement('video');v.src=url;v.autoplay=true;v.loop=true;v.muted=true;v.playsInline=true;s.appendChild(v);}
-    else{const im=document.createElement('img');im.src=url;im.alt='Hero';s.appendChild(im);}
-  }else if(section==='about'){
-    const img=document.getElementById('aboutImg');img.src=url;img.style.display='block';
-    document.getElementById('aboutPh').style.display='none';
-  }else if(section==='project'){
-    const idx=slot.replace('proj-','');
-    const ex=document.getElementById('proj-media-'+idx);if(!ex)return;
-    if(rt==='video'){const v=document.createElement('video');v.id='proj-media-'+idx;v.className='proj-media';v.src=url;v.autoplay=true;v.loop=true;v.muted=true;v.playsInline=true;ex.replaceWith(v);}
-    else{const im=document.createElement('img');im.id='proj-media-'+idx;im.className='proj-media';im.src=url;im.alt='Project';ex.replaceWith(im);}
+/* ── APPLY MEDIA FROM DB ── */
+function applyMedia(section, slot, url, rt) {
+  if (section === 'hero') {
+    var s = document.getElementById('heroMedia');
+    if (!s) return;
+    s.innerHTML = '';
+    if (rt === 'video') {
+      var v = document.createElement('video');
+      v.src = url; v.autoplay = true; v.loop = true; v.muted = true; v.playsInline = true;
+      v.style.cssText = 'width:100%;height:100%;object-fit:cover;opacity:.4;filter:saturate(.5) sepia(.2)';
+      s.appendChild(v);
+    } else {
+      var img = document.createElement('img');
+      img.src = url; img.alt = 'Hero';
+      img.style.cssText = 'width:100%;height:100%;object-fit:cover;opacity:.4;filter:saturate(.5) sepia(.2)';
+      s.appendChild(img);
+    }
+  } else if (section === 'about') {
+    var aImg = document.getElementById('aboutImg');
+    var aPh = document.getElementById('aboutPh');
+    if (aImg) { aImg.src = url; aImg.style.display = 'block'; }
+    if (aPh) aPh.style.display = 'none';
+  } else if (section === 'project') {
+    var idx = slot.replace('proj-', '');
+    var ex = document.getElementById('proj-media-' + idx);
+    if (!ex) return;
+    if (rt === 'video') {
+      var pv = document.createElement('video');
+      pv.id = 'proj-media-' + idx; pv.className = 'proj-media';
+      pv.src = url; pv.autoplay = true; pv.loop = true; pv.muted = true; pv.playsInline = true;
+      ex.replaceWith(pv);
+    } else {
+      var pi = document.createElement('img');
+      pi.id = 'proj-media-' + idx; pi.className = 'proj-media';
+      pi.src = url; pi.alt = 'Project';
+      ex.replaceWith(pi);
+    }
   }
 }
 
-/* ── GALLERY ── */
-let galleryData=[],currentGalCat='';
-function openGallery(cat,title){
-  currentGalCat=cat;
-  document.getElementById('galCatLabel').textContent='Elevare Creative';
-  document.getElementById('galTitle').textContent=title;
-  const ov=document.getElementById('galleryOverlay');
-  ov.classList.add('open');
-  requestAnimationFrame(()=>requestAnimationFrame(()=>ov.classList.add('visible')));
-  document.body.style.overflow='hidden';
-  renderGallery(cat);
-}
-function closeGallery(){
-  const ov=document.getElementById('galleryOverlay');
-  ov.classList.remove('visible');
-  setTimeout(()=>{ov.classList.remove('open');document.body.style.overflow='';},500);
-}
-function renderGallery(cat){
-  const grid=document.getElementById('galleryGrid');
-  const items=galleryData.filter(i=>i.category===cat);
-  if(!items.length&&!editMode){grid.innerHTML='<div class="gallery-empty">No work added yet for this category.</div>';return;}
-  let html=items.map(item=>{
-    const isVid=item.resource_type==='video';
-    return '<div class="gallery-item" onclick="openLightbox(''+item.url+'',''+item.resource_type+'')">'
-      +(isVid?'<video src="'+item.url+'" muted loop playsinline></video>':'<img src="'+item.url+'" alt="'+( item.caption||cat)+'" loading="lazy"/>')
-      +'<div class="gallery-item-overlay"><div class="gallery-caption">'+(item.caption||'')+'</div></div>'
-      +'<button class="gallery-item-del" onclick="event.stopPropagation();deleteGalleryItem('+item.id+',''+cat+'')">Remove</button>'
-      +'</div>';
-  }).join('');
-  if(editMode)html+='<div class="gallery-add-btn" onclick="triggerGalleryUpload(''+cat+'')"><div class="gallery-add-inner"><span>+</span>Add Work</div></div>';
-  grid.innerHTML=html;
-  grid.querySelectorAll('video').forEach(v=>{
-    v.parentElement.addEventListener('mouseenter',()=>v.play());
-    v.parentElement.addEventListener('mouseleave',()=>{v.pause();v.currentTime=0;});
-  });
-}
-async function deleteGalleryItem(id,cat){
-  if(!confirm('Remove this item?'))return;
-  await api('/gallery/'+id,'DELETE');
-  galleryData=galleryData.filter(i=>i.id!==id);
-  renderGallery(cat);
-}
+/* ── GALLERY DATA ── */
+var galleryData = [];
+var blogPosts = [];
 
-/* ── LIGHTBOX ── */
-function openLightbox(url,rt){
-  const c=document.getElementById('lightboxContent');
-  if(rt==='video')c.innerHTML='<video src="'+url+'" controls autoplay style="max-width:90vw;max-height:85vh"></video>';
-  else c.innerHTML='<img src="'+url+'" style="max-width:90vw;max-height:85vh;object-fit:contain"/>';
-  document.getElementById('lightbox').classList.add('open');
-  document.body.style.overflow='hidden';
-}
-function closeLightbox(){document.getElementById('lightbox').classList.remove('open');document.body.style.overflow='';}
+/* ── LOAD FROM DB ── */
+async function loadDB() {
+  try {
+    var d = await api('/load');
+    if (!d || d.error) { renderBlog(); return; }
 
-/* ── PROJECTS ── */
-function removeProj(btn){if(!editMode||!confirm('Remove?'))return;btn.closest('.proj-card').remove();}
-let pc=5;
-function addProj(){
-  if(!editMode)return;
-  const idx=pc++,g=document.getElementById('projGrid'),a=g.querySelector('.add-proj');
-  const c=document.createElement('div');c.className='proj-card in';c.dataset.index=idx;c.style.gridColumn='span 4';
-  c.innerHTML='<div class="proj-media-ph" id="proj-media-'+idx+'">NEW</div><div class="proj-ov"><div><p class="proj-cat eb" contenteditable="true">Category</p><h3 class="proj-title eb" contenteditable="true">Title</h3><p class="proj-cap eb" contenteditable="true">Caption</p></div></div><div class="proj-arrow">↗</div><div class="card-ec"><button class="ec-btn" onclick="triggerUpload('project','proj-'+idx+'')">Replace</button><button class="ec-btn del" onclick="removeProj(this)">Remove</button></div>';
-  g.insertBefore(c,a);
+    // Apply text content
+    if (d.content) {
+      Object.keys(d.content).forEach(function(id) {
+        if (id.charAt(0) === '_') return;
+        var el = document.getElementById(id);
+        var val = d.content[id];
+        if (el && val) el.innerHTML = val;
+      });
+      // Apply social links
+      var sm = { socialIG: 'cIG', socialTT: 'cTT', socialLI: 'cLI', socialFB: 'cFB', socialYT: 'cYT' };
+      Object.keys(sm).forEach(function(key) {
+        var val = d.content[key];
+        if (!val) return;
+        var fe = document.getElementById(key); if (fe) fe.href = val;
+        var ce = document.getElementById(sm[key]); if (ce) ce.href = val;
+      });
+    }
+
+    // Apply media
+    if (d.media && d.media.length) {
+      d.media.forEach(function(m) { applyMedia(m.section, m.slot_key, m.url, m.resource_type); });
+    }
+
+    // Apply gallery
+    if (d.gallery) {
+      galleryData = d.gallery.map(function(i) {
+        return { id: i.id, category: i.category, url: i.url, resource_type: i.resource_type, caption: i.caption || '' };
+      });
+    }
+
+    // Apply blog posts
+    if (d.posts && d.posts.length) {
+      blogPosts = d.posts.map(function(p) {
+        return { id: p.id, date: p.post_date, cat: p.category, title: p.title, excerpt: p.excerpt, content: p.content };
+      });
+    }
+
+    renderBlog();
+  } catch(err) {
+    console.error('loadDB failed:', err.message);
+    renderBlog();
+  }
 }
 
 /* ── BLOG ── */
-let blogPosts=[];
-function renderBlog(){
-  const g=document.getElementById('blogGrid');
-  if(!blogPosts.length){g.innerHTML='<p style="font-family:var(--fp);color:var(--text-light);font-style:italic">No posts yet.</p>';return;}
-  g.innerHTML=blogPosts.map(p=>'<div class="blog-card in"><div class="blog-card-ctrl"><button class="ec-btn del" onclick="deletePost(''+p.id+'')">Delete</button></div><p class="blog-date">'+(p.date||'')+' · '+(p.cat||'Youth Advocacy')+'</p><h3 class="blog-title">'+p.title+'</h3><p class="blog-excerpt">'+p.excerpt+'</p><div class="blog-rm" onclick="openBlogModal(''+p.id+'')">Continue Reading</div></div>').join('');
+function renderBlog() {
+  var g = document.getElementById('blogGrid');
+  if (!g) return;
+  if (!blogPosts.length) {
+    g.innerHTML = '<p style="font-family:var(--fp);color:var(--text-light);font-style:italic">No posts yet.</p>';
+    return;
+  }
+  g.innerHTML = blogPosts.map(function(p) {
+    return '<div class="blog-card">' +
+      '<div class="blog-card-ctrl"><button class="ec-btn del" onclick="deletePost('' + p.id + '')">Delete</button></div>' +
+      '<p class="blog-date">' + (p.date || '') + ' · ' + (p.cat || 'Youth Advocacy') + '</p>' +
+      '<h3 class="blog-title">' + p.title + '</h3>' +
+      '<p class="blog-excerpt">' + p.excerpt + '</p>' +
+      '<div class="blog-rm" onclick="openBlogModal('' + p.id + '')">Continue Reading</div>' +
+      '</div>';
+  }).join('');
 }
-function openBlogModal(id){
-  const p=blogPosts.find(x=>String(x.id)===String(id));if(!p)return;
-  document.getElementById('blogMC').innerHTML='<h2>'+p.title+'</h2><p class="m-meta">'+(p.date||'')+' · '+(p.cat||'')+'</p><div>'+p.content+'</div>';
+
+function openBlogModal(id) {
+  var p = blogPosts.find(function(x) { return String(x.id) === String(id); });
+  if (!p) return;
+  document.getElementById('blogMC').innerHTML = '<h2>' + p.title + '</h2><p class="m-meta">' + (p.date || '') + ' · ' + (p.cat || '') + '</p><div>' + p.content + '</div>';
   document.getElementById('blogModal').classList.add('open');
 }
-function closeBlogModal(){document.getElementById('blogModal').classList.remove('open');}
-async function deletePost(id){
-  if(!editMode||!confirm('Delete?'))return;
-  if(!/^d/.test(String(id)))await api('/blog/'+id,'DELETE');
-  blogPosts=blogPosts.filter(p=>String(p.id)!==String(id));
-  renderBlog();showToast('Post deleted.');
-}
-function openNewBlog(){if(!editMode)return;document.getElementById('newBlogModal').classList.add('open');}
-function closeNewBlog(){document.getElementById('newBlogModal').classList.remove('open');}
-async function publishPost(){
-  const title=document.getElementById('nbTitle').value.trim();
-  const date=document.getElementById('nbDate').value.trim();
-  const cat=document.getElementById('nbCat').value.trim();
-  const body=document.getElementById('nbContent').value.trim();
-  if(!title||!body){alert('Please add a title and content.');return;}
-  const excerpt=body.substring(0,220)+(body.length>220?'...':'');
-  const content=body.split('
+function closeBlogModal() { document.getElementById('blogModal').classList.remove('open'); }
 
-').map(p=>'<p>'+p+'</p>').join('');
-  showToast('Publishing...');
-  const post=await api('/blog','POST',{title,excerpt,content,category:cat||'Youth Advocacy',post_date:date||new Date().toLocaleDateString('en-US',{month:'long',year:'numeric'})});
-  blogPosts.unshift({id:post.id,date:post.post_date,cat:post.category,title:post.title,excerpt:post.excerpt,content:post.content});
-  renderBlog();closeNewBlog();
-  ['nbTitle','nbDate','nbCat','nbContent'].forEach(id=>document.getElementById(id).value='');
+async function deletePost(id) {
+  if (!/^d/.test(String(id))) await api('/blog/' + id);
+  blogPosts = blogPosts.filter(function(p) { return String(p.id) !== String(id); });
+  renderBlog();
+}
+function openNewBlog() { return; }
+function closeNewBlog() { return; }
+
+async function publishPost() {
+  var title = document.getElementById('nbTitle').value.trim();
+  var date = document.getElementById('nbDate').value.trim();
+  var cat = document.getElementById('nbCat').value.trim();
+  var body = document.getElementById('nbContent').value.trim();
+  if (!title || !body) { alert('Add title and content.'); return; }
+  var excerpt = body.substring(0, 220) + (body.length > 220 ? '...' : '');
+  var contentHtml = body.split('
+
+').map(function(p) { return '<p>' + p + '</p>'; }).join('');
+  var post = await api('/blog', 'POST', { title: title, excerpt: excerpt, content: contentHtml, category: cat || 'Youth Advocacy', post_date: date || new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) });
+  blogPosts.unshift({ id: post.id, date: post.post_date, cat: post.category, title: post.title, excerpt: post.excerpt, content: post.content });
+  renderBlog(); closeNewBlog();
+  ['nbTitle','nbDate','nbCat','nbContent'].forEach(function(id) { document.getElementById(id).value = ''; });
   showToast('Post published!');
-  document.getElementById('blog').scrollIntoView({behavior:'smooth'});
 }
 
-/* ── LOAD DB ── */
-async function loadDB(){
-  const dbStatus = document.getElementById('dbStatus');
-  const showStatus = (msg) => { if(dbStatus){dbStatus.textContent=msg;dbStatus.style.display='block';} };
-  try{
-    showStatus('Fetching from DB...');
-    const d=await api('/load');
-    if(!d||d.error){ 
-      showStatus('DB Error: '+(d&&d.error||'no response'));
-      renderBlog(); return; 
+/* ── APPLY MEDIA FROM DB ── */
+function applyMedia(section, slot, url, rt) {
+  if (section === 'hero') {
+    var s = document.getElementById('heroMedia');
+    if (!s) return;
+    s.innerHTML = '';
+    if (rt === 'video') {
+      var v = document.createElement('video');
+      v.src = url; v.autoplay = true; v.loop = true; v.muted = true; v.playsInline = true;
+      v.style.cssText = 'width:100%;height:100%;object-fit:cover;opacity:.4;filter:saturate(.5) sepia(.2)';
+      s.appendChild(v);
+    } else {
+      var img = document.createElement('img');
+      img.src = url; img.alt = 'Hero background';
+      img.style.cssText = 'width:100%;height:100%;object-fit:cover;opacity:.4;filter:saturate(.5) sepia(.2)';
+      s.appendChild(img);
     }
-    const keys = d.content ? Object.keys(d.content).filter(k=>!k.startsWith('_')) : [];
-    showStatus('DB loaded '+keys.length+' keys. Applying...');
-    let applied = 0;
-    if(d.content){
-      Object.entries(d.content).forEach(([id,v])=>{
-        if(id.startsWith('_'))return;
-        const el=document.getElementById(id);
-        if(el&&v){ el.innerHTML=v; applied++; }
+  } else if (section === 'about') {
+    var aImg = document.getElementById('aboutImg');
+    var aPh = document.getElementById('aboutPh');
+    if (aImg) { aImg.src = url; aImg.style.display = 'block'; }
+    if (aPh) aPh.style.display = 'none';
+  } else if (section === 'project') {
+    var idx = slot.replace('proj-', '');
+    var ex = document.getElementById('proj-media-' + idx);
+    if (!ex) return;
+    if (rt === 'video') {
+      var pv = document.createElement('video');
+      pv.id = 'proj-media-' + idx; pv.className = 'proj-media';
+      pv.src = url; pv.autoplay = true; pv.loop = true; pv.muted = true; pv.playsInline = true;
+      ex.replaceWith(pv);
+    } else {
+      var pi = document.createElement('img');
+      pi.id = 'proj-media-' + idx; pi.className = 'proj-media';
+      pi.src = url; pi.alt = 'Project';
+      ex.replaceWith(pi);
+    }
+  }
+}
+
+/* ── GALLERY DATA ── */
+var galleryData = [];
+var blogPosts = [];
+
+/* ── LOAD FROM DB ── */
+async function loadDB() {
+  try {
+    var d = await api('/load');
+    if (!d || d.error) { renderBlog(); return; }
+
+    // Apply text content
+    if (d.content) {
+      Object.keys(d.content).forEach(function(id) {
+        if (id.charAt(0) === '_') return;
+        var el = document.getElementById(id);
+        var val = d.content[id];
+        if (el && val) el.innerHTML = val;
       });
-      const sm={socialIG:'cIG',socialTT:'cTT',socialLI:'cLI',socialFB:'cFB',socialYT:'cYT'};
-      Object.entries(sm).forEach(([k,eid])=>{
-        const v=d.content[k];
-        if(v){
-          const fe=document.getElementById(k); if(fe) fe.href=v;
-          const ce=document.getElementById(eid); if(ce) ce.href=v;
-        }
+      // Apply social links
+      var sm = { socialIG: 'cIG', socialTT: 'cTT', socialLI: 'cLI', socialFB: 'cFB', socialYT: 'cYT' };
+      Object.keys(sm).forEach(function(key) {
+        var val = d.content[key];
+        if (!val) return;
+        var fe = document.getElementById(key); if (fe) fe.href = val;
+        var ce = document.getElementById(sm[key]); if (ce) ce.href = val;
       });
     }
-    if(d.media&&d.media.length) d.media.forEach(m=>applyMedia(m.section,m.slot_key,m.url,m.resource_type));
-    if(d.gallery) galleryData=d.gallery.map(i=>({id:i.id,category:i.category,url:i.url,resource_type:i.resource_type,caption:i.caption||''}));
-    if(d.posts&&d.posts.length) blogPosts=d.posts.map(p=>({id:p.id,date:p.post_date,cat:p.category,title:p.title,excerpt:p.excerpt,content:p.content}));
+
+    // Apply media
+    if (d.media && d.media.length) {
+      d.media.forEach(function(m) { applyMedia(m.section, m.slot_key, m.url, m.resource_type); });
+    }
+
+    // Apply gallery
+    if (d.gallery) {
+      galleryData = d.gallery.map(function(i) {
+        return { id: i.id, category: i.category, url: i.url, resource_type: i.resource_type, caption: i.caption || '' };
+      });
+    }
+
+    // Apply blog posts
+    if (d.posts && d.posts.length) {
+      blogPosts = d.posts.map(function(p) {
+        return { id: p.id, date: p.post_date, cat: p.category, title: p.title, excerpt: p.excerpt, content: p.content };
+      });
+    }
+
     renderBlog();
-    showStatus('Done! Applied '+applied+'/'+keys.length+' items. Tap to dismiss.');
-    dbStatus.onclick = () => dbStatus.style.display='none';
-    setTimeout(()=>{ if(dbStatus) dbStatus.style.display='none'; }, 8000);
-  }catch(err){
-    const dbStatus2 = document.getElementById('dbStatus');
-    if(dbStatus2){dbStatus2.textContent='loadDB FAILED: '+err.message;dbStatus2.style.display='block';}
-    console.error('DB load failed:',err.message);
+  } catch(err) {
+    console.error('loadDB failed:', err.message);
     renderBlog();
   }
+}
+
+/* ── BLOG ── */
+function renderBlog() {
+  var g = document.getElementById('blogGrid');
+  if (!g) return;
+  if (!blogPosts.length) {
+    g.innerHTML = '<p style="font-family:var(--fp);color:var(--text-light);font-style:italic">No posts yet.</p>';
+    return;
+  }
+  g.innerHTML = blogPosts.map(function(p) {
+    return '<div class="blog-card">' +
+      '<p class="blog-date">' + (p.date || '') + ' · ' + (p.cat || 'Youth Advocacy') + '</p>' +
+      '<h3 class="blog-title">' + p.title + '</h3>' +
+      '<p class="blog-excerpt">' + p.excerpt + '</p>' +
+      '<div class="blog-rm" onclick="openBlogModal(\'' + p.id + '\')">Continue Reading</div>' +
+      '</div>';
+  }).join('');
+}
+
+function openBlogModal(id) {
+  var p = blogPosts.find(function(x) { return String(x.id) === String(id); });
+  if (!p) return;
+  document.getElementById('blogMC').innerHTML = '<h2>' + p.title + '</h2><p class="m-meta">' + (p.date || '') + ' · ' + (p.cat || '') + '</p><div>' + p.content + '</div>';
+  document.getElementById('blogModal').classList.add('open');
+}
+function closeBlogModal() { document.getElementById('blogModal').classList.remove('open'); }
+
+
+function openGallery(cat, title) {
+  document.getElementById('galCatLabel').textContent = 'Elevare Creative';
+  document.getElementById('galTitle').textContent = title;
+  var ov = document.getElementById('galleryOverlay');
+  ov.classList.add('open');
+  requestAnimationFrame(function() { requestAnimationFrame(function() { ov.classList.add('visible'); }); });
+  document.body.style.overflow = 'hidden';
+  renderGallery(cat);
+}
+function closeGallery() {
+  var ov = document.getElementById('galleryOverlay');
+  ov.classList.remove('visible');
+  setTimeout(function() { ov.classList.remove('open'); document.body.style.overflow = ''; }, 500);
+}
+function renderGallery(cat) {
+  var grid = document.getElementById('galleryGrid');
+  var items = galleryData.filter(function(i) { return i.category === cat; });
+  if (!items.length) {
+    grid.innerHTML = '<div class="gallery-empty">No work added yet in this category.</div>';
+    return;
+  }
+  var html = items.map(function(item) {
+    var isVid = item.resource_type === 'video';
+    return '<div class="gallery-item" onclick="openLightbox(\'' + item.url + '\',\'' + item.resource_type + '\')">' +
+      (isVid ? '<video src="' + item.url + '" muted loop playsinline></video>' : '<img src="' + item.url + '" alt="' + (item.caption || cat) + '" loading="lazy"/>') +
+      '<div class="gallery-item-overlay"><div class="gallery-caption">' + (item.caption || '') + '</div></div>' +
+      '</div>';
+  }).join('');
+  grid.innerHTML = html;
+  grid.querySelectorAll('video').forEach(function(v) {
+    v.parentElement.addEventListener('mouseenter', function() { v.play(); });
+    v.parentElement.addEventListener('mouseleave', function() { v.pause(); v.currentTime = 0; });
+  });
+}
+function openLightbox(url, rt) {
+  var c = document.getElementById('lightboxContent');
+  c.innerHTML = rt === 'video'
+    ? '<video src="' + url + '" controls autoplay style="max-width:90vw;max-height:85vh"></video>'
+    : '<img src="' + url + '" style="max-width:90vw;max-height:85vh;object-fit:contain"/>';
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow = ''; }
+
+/* ── NAV ── */
+window.addEventListener('scroll', function() { document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 60); });
+window.addEventListener('scroll', function() { var hm = document.getElementById('heroMedia'); if (hm) hm.style.transform = 'translateY(' + window.scrollY * 0.35 + 'px)'; });
+
+/* ── ANIMATIONS ── */
+function setupCounters() {
+  var obs = new IntersectionObserver(function(es) {
+    es.forEach(function(e) {
+      if (e.isIntersecting) {
+        var el = e.target; var target = parseInt(el.dataset.target); var dur = 1800; var start = Date.now();
+        var tick = function() { var p = Math.min((Date.now()-start)/dur,1); var ease = 1-Math.pow(1-p,4); el.textContent = Math.round(ease*target); if(p<1) requestAnimationFrame(tick); };
+        tick(); obs.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.stat-number').forEach(function(el) { obs.observe(el); });
 }
 
 /* ── CONTACT FORM ── */
-async function handleFormSubmit(e){
+async function handleFormSubmit(e) {
   e.preventDefault();
-  const btn=document.getElementById('submitBtn');
-  const success=document.getElementById('formSuccess');
-  const error=document.getElementById('formError');
-  btn.textContent='Sending...';btn.disabled=true;
-  success.style.display='none';error.style.display='none';
-  const form=document.getElementById('contactForm');
-  const name=form.querySelector('[name="name"]').value;
-  const email=form.querySelector('[name="email"]').value;
-  const subject=form.querySelector('[name="subject"]')?form.querySelector('[name="subject"]').value:'';
-  const message=form.querySelector('[name="message"]').value;
-  try{
-    const response=await fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,subject,message})});
-    const data=await response.json();
-    if(data.ok){success.style.display='block';form.reset();}
+  var btn = document.getElementById('submitBtn');
+  var success = document.getElementById('formSuccess');
+  var error = document.getElementById('formError');
+  btn.textContent = 'Sending...'; btn.disabled = true;
+  success.style.display = 'none'; error.style.display = 'none';
+  var form = document.getElementById('contactForm');
+  try {
+    var r = await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: form.querySelector('[name="name"]').value, email: form.querySelector('[name="email"]').value, subject: (form.querySelector('[name="subject"]') || {}).value || '', message: form.querySelector('[name="message"]').value }) });
+    var data = await r.json();
+    if (data.ok) { success.style.display = 'block'; form.reset(); }
     else throw new Error('Failed');
-  }catch(err){error.style.display='block';}
-  btn.textContent='Send Message';btn.disabled=false;
+  } catch(err) { error.style.display = 'block'; }
+  btn.textContent = 'Send Message'; btn.disabled = false;
 }
 
 /* ── CLOSE MODALS ── */
-['blogModal','newBlogModal','adminOv'].forEach(id=>{
-  document.getElementById(id).addEventListener('click',e=>{
-    if(e.target===document.getElementById(id)){
-      if(id==='adminOv')closeLogin();
-      else if(id==='blogModal')closeBlogModal();
-      else closeNewBlog();
-    }
-  });
-});
-document.getElementById('lightbox').addEventListener('click',e=>{if(e.target===document.getElementById('lightbox'))closeLightbox();});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeBlogModal();closeNewBlog();closeLogin();closeLightbox();closeGallery();}});
+var lb = document.getElementById('lightbox');
+if (lb) lb.addEventListener('click', function(e) { if (e.target === lb) closeLightbox(); });
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { closeBlogModal(); closeLightbox(); closeGallery(); } });
 
-/* ── SECRET ADMIN TRIGGER ── */
-// Gold line - tap 3 times to open login
-let _taps=0,_tapTimer=null;
-function _handleTap(){
-  _taps++;clearTimeout(_tapTimer);
-  _tapTimer=setTimeout(()=>_taps=0,4000);
-  const inner=document.querySelector('#secretLine div');
-  if(inner){
-    inner.style.background='linear-gradient(90deg,transparent,rgba(201,168,76,1),transparent)';
-    setTimeout(()=>{inner.style.background='linear-gradient(90deg,transparent,rgba(201,168,76,0.35),transparent)';},250);
-  }
-  if(_taps>=3){
-    _taps=0;clearTimeout(_tapTimer);
-    const ov=document.getElementById('adminOv');
-    const pw=document.getElementById('pwInput');
-    if(ov&&pw){ov.style.display='flex';ov.classList.add('open');setTimeout(()=>pw.focus(),100);}
-  }
-}
-document.addEventListener('DOMContentLoaded',()=>{
-  const line=document.getElementById('secretLine');
-  if(line){
-    line.addEventListener('click',e=>{e.stopPropagation();_handleTap();});
-    line.addEventListener('touchstart',e=>{e.preventDefault();e.stopPropagation();_handleTap();},{passive:false});
-  }
+/* ── START ── */
+window.addEventListener('DOMContentLoaded', function() {
+  setupCounters();
+  loadDB();
 });
 </script>
 </body>
