@@ -602,7 +602,7 @@ document.getElementById('fileInput').addEventListener('change', async e => {
   toast('Uploading...');
   try {
     if (uploadTarget.type === 'media') {
-      const progId = uploadTarget.section === 'hero' ? 'heroProgress' : 'galProgress';
+      const progId = uploadTarget.section === 'hero' ? 'heroProgress' : uploadTarget.section === 'about' ? 'aboutProgress' : 'galProgress';
       const { url, public_id, resource_type } = await cloudUpload(file, progId);
       await api('/media', 'POST', {
         section: uploadTarget.section,
