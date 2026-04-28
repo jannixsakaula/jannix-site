@@ -67,6 +67,7 @@ nav.scrolled{background:rgba(13,27,75,.96);backdrop-filter:blur(20px);padding:16
 .nav-links a::after{content:'';position:absolute;bottom:-4px;left:50%;width:0;height:1px;background:var(--gold);transition:all .4s var(--expo);transform:translateX(-50%);}
 .nav-links a:hover{color:var(--gold-light);}
 .nav-links a:hover::after{width:100%;}
+.nav-edit-btn{display:none !important;}
 
 /* ── HERO ── */
 #hero{height:100vh;min-height:700px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#050d2a;}
@@ -140,7 +141,9 @@ section{padding:130px 0;}
 .tag:hover{background:var(--gold);color:white;}
 
 /* ── EDITABLE ── */
-.eb{outline:none;}
+.eb{outline:none;transition:background .3s,box-shadow .3s;}
+.edit-mode .eb{background:rgba(201,168,76,.07);box-shadow:0 0 0 2px rgba(201,168,76,.35);cursor:text;border-radius:2px;}
+.edit-mode .eb:focus{background:rgba(201,168,76,.13);box-shadow:0 0 0 2px var(--gold);}
 
 /* ── ELEVARE / SERVICES ── */
 #elevare{background:var(--royal);position:relative;overflow:hidden;}
@@ -311,6 +314,27 @@ footer{background:var(--charcoal);padding:72px 64px 44px;}
 .bf textarea{min-height:200px;resize:vertical;line-height:1.8;}
 .bf-actions{margin-top:28px;display:flex;gap:12px;}
 
+/* ── ADMIN LOGIN ── */
+.admin-ov{position:fixed;inset:0;z-index:5000;background:rgba(5,13,42,.98);backdrop-filter:blur(24px);display:none;align-items:center;justify-content:center;}
+.admin-ov.open{display:flex;}
+.admin-box{background:var(--ivory);padding:64px 56px;max-width:420px;width:100%;border-top:3px solid var(--gold);text-align:center;}
+.admin-box h2{font-family:var(--fd);font-size:1.3rem;letter-spacing:.1em;color:var(--royal);margin-bottom:8px;}
+.admin-box p{font-family:var(--fp);font-style:italic;font-size:1rem;color:var(--text-light);margin-bottom:34px;}
+.admin-box input{width:100%;font-family:var(--fp);font-size:1rem;color:var(--text-dark);background:var(--ivory-warm);border:1px solid var(--ivory-deep);border-bottom:2px solid var(--ivory-deep);padding:14px 18px;outline:none;text-align:center;letter-spacing:.1em;margin-bottom:16px;transition:border-color .3s;}
+.admin-box input:focus{border-color:var(--gold);}
+.login-err{font-family:var(--fd);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:#c04040;margin-bottom:16px;display:none;}
+.login-err.show{display:block;}
+.admin-cancel{font-family:var(--fd);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-light);background:none;border:none;cursor:pointer;margin-top:16px;transition:color .3s;}
+.admin-cancel:hover{color:var(--royal);}
+
+/* ── EDIT BANNER ── */
+.edit-banner{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--royal);font-family:var(--fd);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;padding:13px 34px;display:none;align-items:center;gap:12px;z-index:5000;box-shadow:0 10px 48px rgba(201,168,76,.55);white-space:nowrap;}
+.edit-banner.visible{display:flex;}
+.save-btn{background:var(--royal);color:var(--gold);border:none;font-family:var(--fd);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;padding:7px 18px;cursor:pointer;margin-left:8px;transition:background .3s;}
+.save-btn:hover{background:var(--charcoal);}
+.save-toast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%);background:var(--royal);color:var(--ivory);font-family:var(--fd);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;padding:11px 30px;z-index:6000;opacity:0;transition:opacity .4s;pointer-events:none;border:1px solid var(--gold);}
+.save-toast.show{opacity:1;}
+#gfi{display:none;}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(32px);}to{opacity:1;transform:translateY(0);}}
 @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
@@ -326,8 +350,8 @@ footer{background:var(--charcoal);padding:72px 64px 44px;}
 
 
 
-
-
+<div class="progress-bar" id="progressBar"></div>
+<div class="upload-toast" id="uploadToast"></div>
 <!-- SERVICE GALLERY OVERLAY -->
 <div class="gallery-overlay" id="galleryOverlay">
   <div class="gallery-header">
@@ -368,7 +392,6 @@ footer{background:var(--charcoal);padding:72px 64px 44px;}
   <div class="hero-lines-deco"></div>
   <div class="hero-corner-deco"></div>
   <div class="hero-media" id="heroMedia"><div class="ph">JS</div></div>
-
   <div class="hero-content">
     <div class="hero-eyebrow eb" id="heroEyebrow">Creative Director · Youth Advocate · Zambia</div>
     <div class="hero-name-wrap"><div class="hero-name" id="heroName1">Jannix</div></div>
@@ -411,6 +434,7 @@ footer{background:var(--charcoal);padding:72px 64px 44px;}
       <div class="about-frame">
         <img class="about-img-el" id="aboutImg" src="" alt="Jannix Sakaula — Creative Director and Youth Advocate, Zambia" style="display:none"/>
         <div class="about-img-ph" id="aboutPh"></div>
+
       </div>
       <div class="about-text">
         <p class="eyebrow">About Me</p>
@@ -481,6 +505,7 @@ footer{background:var(--charcoal);padding:72px 64px 44px;}
       <div class="proj-card" data-index="2"><div class="proj-media-ph" id="proj-media-2">FILM</div><div class="proj-ov"><div><p class="proj-cat eb" id="pcat2">Videography</p><h3 class="proj-title eb" id="ptitle2">Youth Voices Film</h3><p class="proj-cap eb" id="pcap2">A short documentary on young leaders shaping tomorrow.</p></div></div><div class="proj-arrow">↗</div></div>
       <div class="proj-card" data-index="3"><div class="proj-media-ph" id="proj-media-3">CONTENT</div><div class="proj-ov"><div><p class="proj-cat eb" id="pcat3">Content Creation</p><h3 class="proj-title eb" id="ptitle3">Social Campaign</h3><p class="proj-cap eb" id="pcap3">Multi-platform campaign reaching 200K+ organic impressions.</p></div></div><div class="proj-arrow">↗</div></div>
       <div class="proj-card" data-index="4"><div class="proj-media-ph" id="proj-media-4">DESIGN</div><div class="proj-ov"><div><p class="proj-cat eb" id="pcat4">Graphic Design</p><h3 class="proj-title eb" id="ptitle4">Print Collection</h3><p class="proj-cap eb" id="pcap4">A series of editorial posters for a cultural event series.</p></div></div><div class="proj-arrow">↗</div></div>
+      </div>
     </div>
   </div>
 </section>
@@ -513,6 +538,7 @@ footer{background:var(--charcoal);padding:72px 64px 44px;}
   <div class="wrap">
     <div class="blog-hdr">
       <div><p class="eyebrow">Youth Advocacy</p><h2 class="sec-title">The <em>Blog</em></h2></div>
+      <button class="blog-add-btn" style="display:none">+ Write New Post</button>
     </div>
     <div class="blog-grid" id="blogGrid"><p style="font-family:var(--fp);color:var(--text-light);font-style:italic">Loading...</p></div>
   </div>
@@ -600,18 +626,23 @@ footer{background:var(--charcoal);padding:72px 64px 44px;}
 <!-- BLOG MODAL -->
 <div class="modal-ov" id="blogModal"><div class="modal-box"><button class="modal-x" onclick="closeBlogModal()">✕ Close</button><div id="blogMC"></div></div></div>
 
-
-
 <script>
 /* ========================================
    JANNIX SAKAULA - MAIN SITE SCRIPT
-   Read-only display. All editing via /admin
+   Clean, minimal, reliable
    ======================================== */
 
+const CLOUD = 'dgsi6tlxe';
+
 /* ── API ── */
-async function api(path) {
-  var url = '/api' + path + '?_t=' + Date.now();
-  var r = await fetch(url, { headers: { 'Cache-Control': 'no-cache' } });
+async function api(path, method, body) {
+  method = method || 'GET';
+  var headers = { 'Content-Type': 'application/json', 'Cache-Control': 'no-cache' };
+  var opts = { method: method, headers: headers };
+  if (body) opts.body = JSON.stringify(body);
+  var url = '/api' + path;
+  if (method === 'GET') url += (url.indexOf('?') >= 0 ? '&' : '?') + '_t=' + Date.now();
+  var r = await fetch(url, opts);
   var text = await r.text();
   try { return JSON.parse(text); } catch(e) { throw new Error('Bad response: ' + text.substring(0,100)); }
 }
@@ -738,12 +769,13 @@ function openBlogModal(id) {
 function closeBlogModal() { document.getElementById('blogModal').classList.remove('open'); }
 
 async function deletePost(id) {
-  if (!/^d/.test(String(id))) await api('/blog/' + id);
+  if (!editMode || !confirm('Delete?')) return;
+  if (!/^d/.test(String(id))) await api('/blog/' + id, 'DELETE');
   blogPosts = blogPosts.filter(function(p) { return String(p.id) !== String(id); });
   renderBlog();
 }
-function openNewBlog() { return; }
-function closeNewBlog() { return; }
+function openNewBlog() { if (!editMode) return; document.getElementById('newBlogModal').classList.add('open'); }
+function closeNewBlog() { document.getElementById('newBlogModal').classList.remove('open'); }
 
 async function publishPost() {
   var title = document.getElementById('nbTitle').value.trim();
@@ -752,9 +784,7 @@ async function publishPost() {
   var body = document.getElementById('nbContent').value.trim();
   if (!title || !body) { alert('Add title and content.'); return; }
   var excerpt = body.substring(0, 220) + (body.length > 220 ? '...' : '');
-  var contentHtml = body.split('
-
-').map(function(p) { return '<p>' + p + '</p>'; }).join('');
+  var contentHtml = body.split('\n\n').map(function(p) { return '<p>' + p + '</p>'; }).join('');
   var post = await api('/blog', 'POST', { title: title, excerpt: excerpt, content: contentHtml, category: cat || 'Youth Advocacy', post_date: date || new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) });
   blogPosts.unshift({ id: post.id, date: post.post_date, cat: post.category, title: post.title, excerpt: post.excerpt, content: post.content });
   renderBlog(); closeNewBlog();
@@ -762,127 +792,7 @@ async function publishPost() {
   showToast('Post published!');
 }
 
-/* ── APPLY MEDIA FROM DB ── */
-function applyMedia(section, slot, url, rt) {
-  if (section === 'hero') {
-    var s = document.getElementById('heroMedia');
-    if (!s) return;
-    s.innerHTML = '';
-    if (rt === 'video') {
-      var v = document.createElement('video');
-      v.src = url; v.autoplay = true; v.loop = true; v.muted = true; v.playsInline = true;
-      v.style.cssText = 'width:100%;height:100%;object-fit:cover;opacity:.4;filter:saturate(.5) sepia(.2)';
-      s.appendChild(v);
-    } else {
-      var img = document.createElement('img');
-      img.src = url; img.alt = 'Hero background';
-      img.style.cssText = 'width:100%;height:100%;object-fit:cover;opacity:.4;filter:saturate(.5) sepia(.2)';
-      s.appendChild(img);
-    }
-  } else if (section === 'about') {
-    var aImg = document.getElementById('aboutImg');
-    var aPh = document.getElementById('aboutPh');
-    if (aImg) { aImg.src = url; aImg.style.display = 'block'; }
-    if (aPh) aPh.style.display = 'none';
-  } else if (section === 'project') {
-    var idx = slot.replace('proj-', '');
-    var ex = document.getElementById('proj-media-' + idx);
-    if (!ex) return;
-    if (rt === 'video') {
-      var pv = document.createElement('video');
-      pv.id = 'proj-media-' + idx; pv.className = 'proj-media';
-      pv.src = url; pv.autoplay = true; pv.loop = true; pv.muted = true; pv.playsInline = true;
-      ex.replaceWith(pv);
-    } else {
-      var pi = document.createElement('img');
-      pi.id = 'proj-media-' + idx; pi.className = 'proj-media';
-      pi.src = url; pi.alt = 'Project';
-      ex.replaceWith(pi);
-    }
-  }
-}
-
-/* ── GALLERY DATA ── */
-var galleryData = [];
-var blogPosts = [];
-
-/* ── LOAD FROM DB ── */
-async function loadDB() {
-  try {
-    var d = await api('/load');
-    if (!d || d.error) { renderBlog(); return; }
-
-    // Apply text content
-    if (d.content) {
-      Object.keys(d.content).forEach(function(id) {
-        if (id.charAt(0) === '_') return;
-        var el = document.getElementById(id);
-        var val = d.content[id];
-        if (el && val) el.innerHTML = val;
-      });
-      // Apply social links
-      var sm = { socialIG: 'cIG', socialTT: 'cTT', socialLI: 'cLI', socialFB: 'cFB', socialYT: 'cYT' };
-      Object.keys(sm).forEach(function(key) {
-        var val = d.content[key];
-        if (!val) return;
-        var fe = document.getElementById(key); if (fe) fe.href = val;
-        var ce = document.getElementById(sm[key]); if (ce) ce.href = val;
-      });
-    }
-
-    // Apply media
-    if (d.media && d.media.length) {
-      d.media.forEach(function(m) { applyMedia(m.section, m.slot_key, m.url, m.resource_type); });
-    }
-
-    // Apply gallery
-    if (d.gallery) {
-      galleryData = d.gallery.map(function(i) {
-        return { id: i.id, category: i.category, url: i.url, resource_type: i.resource_type, caption: i.caption || '' };
-      });
-    }
-
-    // Apply blog posts
-    if (d.posts && d.posts.length) {
-      blogPosts = d.posts.map(function(p) {
-        return { id: p.id, date: p.post_date, cat: p.category, title: p.title, excerpt: p.excerpt, content: p.content };
-      });
-    }
-
-    renderBlog();
-  } catch(err) {
-    console.error('loadDB failed:', err.message);
-    renderBlog();
-  }
-}
-
-/* ── BLOG ── */
-function renderBlog() {
-  var g = document.getElementById('blogGrid');
-  if (!g) return;
-  if (!blogPosts.length) {
-    g.innerHTML = '<p style="font-family:var(--fp);color:var(--text-light);font-style:italic">No posts yet.</p>';
-    return;
-  }
-  g.innerHTML = blogPosts.map(function(p) {
-    return '<div class="blog-card">' +
-      '<p class="blog-date">' + (p.date || '') + ' · ' + (p.cat || 'Youth Advocacy') + '</p>' +
-      '<h3 class="blog-title">' + p.title + '</h3>' +
-      '<p class="blog-excerpt">' + p.excerpt + '</p>' +
-      '<div class="blog-rm" onclick="openBlogModal(\'' + p.id + '\')">Continue Reading</div>' +
-      '</div>';
-  }).join('');
-}
-
-function openBlogModal(id) {
-  var p = blogPosts.find(function(x) { return String(x.id) === String(id); });
-  if (!p) return;
-  document.getElementById('blogMC').innerHTML = '<h2>' + p.title + '</h2><p class="m-meta">' + (p.date || '') + ' · ' + (p.cat || '') + '</p><div>' + p.content + '</div>';
-  document.getElementById('blogModal').classList.add('open');
-}
-function closeBlogModal() { document.getElementById('blogModal').classList.remove('open'); }
-
-
+/* ── GALLERY ── */
 function openGallery(cat, title) {
   document.getElementById('galCatLabel').textContent = 'Elevare Creative';
   document.getElementById('galTitle').textContent = title;
@@ -900,22 +810,30 @@ function closeGallery() {
 function renderGallery(cat) {
   var grid = document.getElementById('galleryGrid');
   var items = galleryData.filter(function(i) { return i.category === cat; });
-  if (!items.length) {
-    grid.innerHTML = '<div class="gallery-empty">No work added yet in this category.</div>';
+  if (!items.length && !editMode) {
+    grid.innerHTML = '<div class="gallery-empty">No work added yet. Enter edit mode to upload.</div>';
     return;
   }
   var html = items.map(function(item) {
     var isVid = item.resource_type === 'video';
-    return '<div class="gallery-item" onclick="openLightbox(\'' + item.url + '\',\'' + item.resource_type + '\')">' +
+    return '<div class="gallery-item" onclick="openLightbox('' + item.url + '','' + item.resource_type + '')">' +
       (isVid ? '<video src="' + item.url + '" muted loop playsinline></video>' : '<img src="' + item.url + '" alt="' + (item.caption || cat) + '" loading="lazy"/>') +
       '<div class="gallery-item-overlay"><div class="gallery-caption">' + (item.caption || '') + '</div></div>' +
+      '<button class="gallery-item-del" onclick="event.stopPropagation();deleteGalleryItem(' + item.id + ','' + cat + '')">Remove</button>' +
       '</div>';
   }).join('');
+  if (editMode) html += '<div class="gallery-add-btn" onclick="triggerGalleryUpload('' + cat + '')"><div class="gallery-add-inner"><span>+</span>Add Work</div></div>';
   grid.innerHTML = html;
   grid.querySelectorAll('video').forEach(function(v) {
     v.parentElement.addEventListener('mouseenter', function() { v.play(); });
     v.parentElement.addEventListener('mouseleave', function() { v.pause(); v.currentTime = 0; });
   });
+}
+async function deleteGalleryItem(id, cat) {
+  if (!confirm('Remove?')) return;
+  await api('/gallery/' + id, 'DELETE');
+  galleryData = galleryData.filter(function(i) { return i.id !== id; });
+  renderGallery(cat);
 }
 function openLightbox(url, rt) {
   var c = document.getElementById('lightboxContent');
@@ -932,6 +850,7 @@ window.addEventListener('scroll', function() { document.getElementById('mainNav'
 window.addEventListener('scroll', function() { var hm = document.getElementById('heroMedia'); if (hm) hm.style.transform = 'translateY(' + window.scrollY * 0.35 + 'px)'; });
 
 /* ── ANIMATIONS ── */
+function initAnimations() { setupCounters(); }
 function setupCounters() {
   var obs = new IntersectionObserver(function(es) {
     es.forEach(function(e) {
@@ -964,13 +883,15 @@ async function handleFormSubmit(e) {
 }
 
 /* ── CLOSE MODALS ── */
+var blogModalEl = document.getElementById('blogModal');
+if (blogModalEl) blogModalEl.addEventListener('click', function(e) { if (e.target === blogModalEl) closeBlogModal(); });
 var lb = document.getElementById('lightbox');
 if (lb) lb.addEventListener('click', function(e) { if (e.target === lb) closeLightbox(); });
 document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { closeBlogModal(); closeLightbox(); closeGallery(); } });
 
 /* ── START ── */
 window.addEventListener('DOMContentLoaded', function() {
-  setupCounters();
+  initAnimations();
   loadDB();
 });
 </script>
