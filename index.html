@@ -21,14 +21,11 @@
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="Jannix Sakaula | Creative Director & Youth Advocate — Zambia"/>
 <meta name="twitter:description" content="Zambian creative director, photographer, videographer, and youth advocate. Founder of Elevare Creative."/>
-
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Jannix Sakaula","url":"https://jannixsakaula.com","jobTitle":"Creative Director & Youth Advocate","worksFor":{"@type":"Organization","name":"Elevare Creative","url":"https://jannixsakaula.com","description":"Elevare Creative is a Zambian full-service creative studio offering graphic design, photography, videography, and content creation."},"address":{"@type":"PostalAddress","addressCountry":"ZM","addressLocality":"Zambia"},"description":"Jannix Sakaula is a Zambian creative director, photographer, videographer, and youth advocate. Founder of Elevare Creative.","knowsAbout":["Creative Direction","Photography","Videography","Graphic Design","Content Creation","Youth Advocacy","Brand Identity"]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Elevare Creative","url":"https://jannixsakaula.com","founder":{"@type":"Person","name":"Jannix Sakaula"},"address":{"@type":"PostalAddress","addressCountry":"ZM","addressLocality":"Zambia"},"description":"Elevare Creative is a Zambian full-service creative studio founded by Jannix Sakaula, offering graphic design, photography, videography, and content creation.","serviceType":["Graphic Design","Photography","Videography","Content Creation","Brand Identity"]}</script>
-
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cinzel:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
-
 <style>
 :root{
   --ivory:#F8F4EE;--ivory-warm:#F0E9DC;--ivory-deep:#E8DDD0;
@@ -44,101 +41,68 @@ body{font-family:var(--fb);background:var(--ivory);color:var(--text-dark);overfl
 img,video{max-width:100%;display:block;}
 a{color:inherit;text-decoration:none;}
 ul{list-style:none;}
-
-/* ── NOISE ── */
 body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.35;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");}
-
-/* ── NAV ── */
+.progress-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold-light));width:0%;z-index:99999;transition:width .3s;}
 nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:28px 60px;display:flex;align-items:center;justify-content:space-between;transition:background .6s var(--silk),padding .4s var(--silk),backdrop-filter .6s;}
 nav.scrolled{background:rgba(13,27,75,.96);backdrop-filter:blur(20px);padding:16px 60px;border-bottom:1px solid rgba(201,168,76,.15);}
-.nav-logo{font-family:var(--fd);font-size:1.1rem;letter-spacing:.28em;color:var(--ivory);font-weight:500;text-transform:uppercase;}
+.nav-logo{font-family:var(--fd);font-size:1rem;letter-spacing:.28em;color:var(--ivory);font-weight:500;text-transform:uppercase;}
 .nav-links{display:flex;gap:40px;align-items:center;}
 .nav-links a{font-family:var(--fd);font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(248,244,238,.7);transition:color .3s;position:relative;}
 .nav-links a::after{content:'';position:absolute;bottom:-4px;left:50%;width:0;height:1px;background:var(--gold);transition:all .4s var(--expo);transform:translateX(-50%);}
 .nav-links a:hover{color:var(--gold-light);}
 .nav-links a:hover::after{width:100%;}
-
-/* ── HERO ── */
 #hero{height:100vh;min-height:700px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#050d2a;}
-.hero-media{position:absolute;inset:0;z-index:0;overflow:hidden;}
-.hero-media img, .hero-media video{width:100%;height:100%;object-fit:cover;opacity:.32;filter:saturate(.5) sepia(.2);}
 .hero-bg-grad{position:absolute;inset:0;z-index:0;background:linear-gradient(135deg,#020810 0%,#0D1B4B 45%,#1a2d6b 75%,#050d2a 100%);}
 .hero-glow{position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse 70% 60% at 65% 35%,rgba(201,168,76,.14) 0%,transparent 55%),radial-gradient(ellipse 40% 70% at 15% 75%,rgba(37,62,138,.5) 0%,transparent 50%);}
+.hero-media{position:absolute;inset:0;z-index:0;overflow:hidden;}
+.hero-media img,.hero-media video{width:100%;height:100%;object-fit:cover;opacity:.32;filter:saturate(.5) sepia(.2);}
 .hero-content{position:relative;z-index:3;text-align:center;padding:0 40px;}
 .hero-eyebrow{font-family:var(--fd);font-size:.65rem;letter-spacing:.45em;text-transform:uppercase;color:var(--gold);margin-bottom:32px;display:flex;align-items:center;justify-content:center;gap:20px;}
 .hero-eyebrow::before,.hero-eyebrow::after{content:'';width:28px;height:1px;background:var(--gold);}
 .hero-name{font-family:var(--fd);font-size:clamp(58px,10vw,148px);font-weight:900;color:var(--ivory);line-height:.9;letter-spacing:.04em;text-transform:uppercase;display:block;}
 .hero-tagline{font-family:var(--fb);font-style:italic;font-size:clamp(18px,2.4vw,28px);color:rgba(248,244,238,.65);margin-top:28px;font-weight:300;letter-spacing:.06em;}
-.hero-cta{margin-top:56px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;}
-.btn-p{font-family:var(--fd);font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;padding:17px 48px;background:var(--gold);color:var(--royal);border:none;cursor:pointer;font-weight:600;transition:transform .4s var(--expo),box-shadow .4s;}
-.btn-p:hover{transform:translateY(-3px);box-shadow:0 16px 48px rgba(201,168,76,0.3);}
-.btn-g{font-family:var(--fd);font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;padding:16px 48px;border:1px solid rgba(248,244,238,.35);color:var(--ivory);background:transparent;cursor:pointer;transition:all .4s var(--silk);}
-.btn-g:hover{border-color:var(--gold);color:var(--gold-light);}
-
-/* ── MARQUEE ── */
-.marquee-section{background:var(--royal);padding:20px 0;overflow:hidden;border-top:1px solid rgba(201,168,76,.15);border-bottom:1px solid rgba(201,168,76,.15);}
-.marquee-track{display:flex;animation:marqueeScroll 18s linear infinite;}
-.marquee-item{font-family:var(--fd);font-size:.65rem;letter-spacing:.35em;text-transform:uppercase;color:rgba(201,168,76,.5);padding:0 48px;white-space:nowrap;}
-@keyframes marqueeScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
-
-/* ── SHARED SECTION ── */
+.btn-p{font-family:var(--fd);font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;padding:17px 48px;background:var(--gold);color:var(--royal);border:none;cursor:pointer;font-weight:600;transition:transform .4s var(--expo);}
+.btn-p:hover{transform:translateY(-3px);box-shadow:0 16px 48px rgba(201,168,76,.4);}
 section{padding:130px 0;}
 .wrap{max-width:1300px;margin:0 auto;padding:0 64px;}
 .eyebrow{font-family:var(--fd);font-size:.62rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;display:flex;align-items:center;gap:16px;}
-.eyebrow::before{content:'';width:30px;height:1px;background:var(--gold);}
+.eyebrow::before{content:'';width:30px;height:1px;background:var(--gold);flex-shrink:0;}
 .sec-title{font-family:var(--fd);font-size:clamp(38px,5.5vw,72px);font-weight:600;line-height:1.02;letter-spacing:.02em;color:var(--royal);}
 .sec-title em{font-style:italic;color:var(--gold);font-family:var(--fb);font-weight:300;}
-
-/* ── ABOUT ── */
 .about-grid{display:grid;grid-template-columns:5fr 7fr;gap:110px;align-items:center;}
-.about-frame{position:relative; aspect-ratio:3/4; background:var(--royal-mid); overflow:hidden;}
-.about-img-el{width:100%;height:100%;object-fit:cover;filter:sepia(.1) saturate(.85);}
+.about-frame{position:relative;}
+.about-frame::before{content:'';position:absolute;top:-22px;left:-22px;width:100%;height:100%;border:1px solid var(--gold);z-index:0;}
 .about-body{font-family:var(--fp);font-size:clamp(17px,1.7vw,20px);line-height:1.9;color:var(--text-mid);margin-top:36px;}
-
-/* ── ELEVARE / SERVICES ── */
-#elevare{background:var(--royal);color:var(--ivory);position:relative;overflow:hidden;}
+#elevare{background:var(--royal);color:var(--ivory);}
 #elevare .sec-title{color:var(--ivory);}
 .services-grid{margin-top:80px;display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:3px;}
 .svc-card{background:rgba(248,244,238,.04);padding:52px 38px 44px;border:1px solid rgba(201,168,76,.1);transition:background .5s;}
 .svc-card:hover{background:rgba(248,244,238,.09);}
-.svc-name{font-family:var(--fd);font-size:.9rem;letter-spacing:.15em;text-transform:uppercase;margin-bottom:16px;color:var(--gold-light);}
-
-/* ── BLOG ── */
+.svc-name{font-family:var(--fd);font-size:.9rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ivory);margin-bottom:16px;}
+.proj-grid{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:330px;gap:18px;}
+.proj-card{position:relative;overflow:hidden;background:var(--royal);grid-column:span 6;}
+.proj-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .9s var(--silk);filter:saturate(.6) brightness(.7);}
+.proj-card:hover .proj-media{transform:scale(1.08);filter:saturate(.9) brightness(.5);}
 .blog-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:44px;}
 .blog-card{border-bottom:2px solid var(--ivory-deep);padding-bottom:44px;}
-.blog-title{font-family:var(--fd);font-size:1.4rem;color:var(--royal);margin-bottom:12px;}
-
-/* ── CONTACT ── */
-#contact{background:var(--ivory-warm);}
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:90px;}
-.fg{margin-bottom:24px;}
-.fg label{display:block;font-family:var(--fd);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:10px;color:var(--text-light);}
-.fg input, .fg textarea{width:100%;padding:16px;background:var(--ivory);border:1px solid var(--ivory-deep);font-family:var(--fp);font-size:1rem;}
-
-/* ── LIGHTBOX ── */
+footer{background:var(--royal);padding:100px 0 60px;color:var(--ivory);}
+.footer-socials{display:flex;gap:24px;margin-top:32px;}
+.social-link{width:48px;height:48px;border:1px solid rgba(201,168,76,.3);display:flex;align-items:center;justify-content:center;color:var(--gold);transition:all .3s;}
+.social-link:hover{background:var(--gold);color:var(--royal);}
 .lightbox{position:fixed;inset:0;z-index:4000;background:rgba(0,0,0,.95);display:none;align-items:center;justify-content:center;}
 .lightbox.open{display:flex;}
-
-@media (max-width:992px){
-  nav{padding:20px 30px;}
-  .wrap{padding:0 30px;}
-  .about-grid, .contact-grid{grid-template-columns:1fr;gap:60px;}
-  .services-grid{grid-template-columns:1fr 1fr;}
-}
-@media (max-width:600px){
-  .services-grid{grid-template-columns:1fr;}
-}
 </style>
 </head>
 <body>
 
 <div class="progress-bar" id="progressBar"></div>
 
-<nav id="nav">
-  <div class="nav-logo">Jannix Sakaula</div>
+<nav id="navbar">
+  <a href="#" class="nav-logo">Jannix Sakaula</a>
   <div class="nav-links">
     <a href="#about">About</a>
     <a href="#elevare">Elevare</a>
+    <a href="#projects">Work</a>
     <a href="#blog">Blog</a>
     <a href="#contact">Contact</a>
   </div>
@@ -148,39 +112,32 @@ section{padding:130px 0;}
   <div class="hero-bg-grad"></div>
   <div class="hero-glow"></div>
   <div class="hero-media" id="heroMedia">
-    </div>
+    <div class="ph">JS</div>
+  </div>
   <div class="hero-content">
     <p class="hero-eyebrow">Creative Director & Advocate</p>
     <div class="hero-name-wrap">
-      <span class="hero-name" id="heroTitle">Crafting Stories</span>
-      <span class="hero-name gold" id="heroSubtitle">That Endure</span>
+      <span class="hero-name" id="heroName">Jannix Sakaula</span>
     </div>
-    <p class="hero-tagline" id="heroTagline">Zambian-born creative focused on visual storytelling and youth empowerment.</p>
+    <p class="hero-tagline" id="heroTagline">Elevating stories that move, inspire, and endure.</p>
     <div class="hero-cta">
-      <a href="#contact"><button class="btn-p">Start a Project</button></a>
-      <a href="#elevare"><button class="btn-g">View Services</button></a>
+      <a href="#projects"><button class="btn-p">View Portfolio</button></a>
+      <a href="#contact"><button class="btn-g">Let's Talk</button></a>
     </div>
   </div>
 </section>
-
-<div class="marquee-section">
-  <div class="marquee-track">
-    <div class="marquee-item">Photography <span>•</span> Videography <span>•</span> Creative Direction <span>•</span> Brand Identity <span>•</span> Youth Advocacy <span>•</span> Storytelling <span>•</span> Graphic Design <span>•</span> Strategy <span>•</span></div>
-    <div class="marquee-item">Photography <span>•</span> Videography <span>•</span> Creative Direction <span>•</span> Brand Identity <span>•</span> Youth Advocacy <span>•</span> Storytelling <span>•</span> Graphic Design <span>•</span> Strategy <span>•</span></div>
-  </div>
-</div>
 
 <section id="about">
   <div class="wrap">
     <div class="about-grid">
       <div class="about-frame" id="aboutImg">
-        </div>
-      <div class="about-content">
-        <p class="eyebrow">The Vision</p>
-        <h2 class="sec-title">Artistry with <em>Purpose</em></h2>
-        <div class="about-body" id="aboutText">
-          <p>I am Jannix Sakaula, a Zambian creative director and founder of Elevare Creative. My work is a fusion of high-end visual aesthetics and grassroots advocacy.</p>
-          <p>Through the lens, I capture the spirit of Zambia and its youth, transforming moments into movements that inspire change and social impact.</p>
+        <div style="width:100%;aspect-ratio:3/4;background:var(--royal-mid)"></div>
+      </div>
+      <div>
+        <p class="eyebrow">The Visionary</p>
+        <h2 class="sec-title" id="aboutTitle">About <em>Jannix</em></h2>
+        <div class="about-body" id="aboutBody">
+          <p>Jannix Sakaula is a Zambian creative director and photographer dedicated to visual storytelling.</p>
         </div>
       </div>
     </div>
@@ -189,207 +146,147 @@ section{padding:130px 0;}
 
 <section id="elevare">
   <div class="wrap">
-    <p class="eyebrow">Creative Studio</p>
+    <p class="eyebrow" style="color:var(--gold)">Full-Service Studio</p>
     <h2 class="sec-title">Elevare <em>Creative</em></h2>
-    <p style="margin-top:20px; color:rgba(255,255,255,0.7); max-width:600px;">A full-service creative engine specializing in brand elevation and authentic storytelling across Zambia and beyond.</p>
     <div class="services-grid">
-      <div class="svc-card">
-        <div class="svc-name">Photography</div>
-        <p style="font-size:0.9rem; opacity:0.6;">High-end portraiture, editorial, and commercial captures.</p>
-      </div>
-      <div class="svc-card">
-        <div class="svc-name">Videography</div>
-        <p style="font-size:0.9rem; opacity:0.6;">Cinematic storytelling and commercial production.</p>
-      </div>
-      <div class="svc-card">
-        <div class="svc-name">Branding</div>
-        <p style="font-size:0.9rem; opacity:0.6;">Identity design and creative strategy for growing brands.</p>
-      </div>
-      <div class="svc-card">
-        <div class="svc-name">Advocacy</div>
-        <p style="font-size:0.9rem; opacity:0.6;">Campaigns focused on youth empowerment and social change.</p>
-      </div>
+      <div class="svc-card"><h3 class="svc-name">Photography</h3></div>
+      <div class="svc-card"><h3 class="svc-name">Videography</h3></div>
+      <div class="svc-card"><h3 class="svc-name">Graphic Design</h3></div>
+      <div class="svc-card"><h3 class="svc-name">Branding</h3></div>
+      <div class="svc-card"><h3 class="svc-name">Creative Direction</h3></div>
     </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <p class="eyebrow">Featured Work</p>
+    <h2 class="sec-title">Selected <em>Projects</em></h2>
+    <div class="proj-grid" id="projectGrid">
+      </div>
   </div>
 </section>
 
 <section id="blog">
   <div class="wrap">
-    <p class="eyebrow">Perspectives</p>
+    <p class="eyebrow">Insights</p>
     <h2 class="sec-title">The <em>Blog</em></h2>
-    <div class="blog-grid" id="blogGrid" style="margin-top:60px;">
-      <p style="font-style:italic; color:var(--text-light);">Loading insights...</p>
-    </div>
-  </div>
-</section>
-
-<section id="contact">
-  <div class="wrap">
-    <div class="contact-grid">
-      <div>
-        <p class="eyebrow">Get In Touch</p>
-        <h2 class="sec-title">Let's Create<br/><em>Together</em></h2>
-        <p style="margin-top:30px; line-height:1.8; color:var(--text-mid);">Whether you have a project in mind or just want to connect, I'm always open to new collaborations.</p>
-        <div style="margin-top:40px;">
-          <p style="font-family:var(--fd); font-size:0.7rem; letter-spacing:0.1em; color:var(--gold);">EMAIL</p>
-          <p id="contactEmail" style="font-family:var(--fp); font-size:1.2rem;">hello@jannixsakaula.com</p>
-        </div>
+    <div class="blog-grid" id="blogGrid">
       </div>
-      <form id="contactForm" onsubmit="handleFormSubmit(event)">
-        <div class="fg">
-          <label>Name</label>
-          <input type="text" name="name" required placeholder="Your Name">
-        </div>
-        <div class="fg">
-          <label>Email</label>
-          <input type="email" name="email" required placeholder="Your Email">
-        </div>
-        <div class="fg">
-          <label>Message</label>
-          <textarea name="message" rows="5" required placeholder="Tell me about your project..."></textarea>
-        </div>
-        <button type="submit" class="btn-p" style="width:100%" id="submitBtn">Send Message</button>
-        <p id="formStatus" style="margin-top:15px; font-size:0.9rem; display:none;"></p>
-      </form>
-    </div>
   </div>
 </section>
 
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+<footer>
+  <div class="wrap">
+    <h2 class="nav-logo">Jannix Sakaula</h2>
+    <div class="footer-socials">
+      <a href="#" class="social-link" id="socialIG">IG</a>
+      <a href="#" class="social-link" id="socialTT">TT</a>
+      <a href="#" class="social-link" id="socialLI">LI</a>
+      <a href="#" class="social-link" id="socialFB">FB</a>
+    </div>
+    <p style="margin-top:60px; opacity:0.5; font-size:0.8rem;">&copy; 2024 Jannix Sakaula. All rights reserved.</p>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox">
   <div id="lightboxContent"></div>
 </div>
 
 <script>
-/* ── API HELPER ── */
-async function api(path, method = 'GET', body = null) {
-  try {
-    const opts = { method, headers: { 'Content-Type': 'application/json' } };
-    if (body) opts.body = JSON.stringify(body);
-    const r = await fetch(path, opts);
-    return await r.json();
-  } catch (e) {
-    console.error("API Error:", e);
-    return { error: true };
-  }
+/* ── HELPER: API CALL ── */
+async function api(path, method='GET', body=null) {
+  const options = { method, headers: { 'Content-Type': 'application/json' } };
+  if(body) options.body = JSON.stringify(body);
+  const r = await fetch('/api' + path, options);
+  return r.json();
 }
 
-/* ── UI HELPERS ── */
+/* ── LOAD DATA FROM DATABASE ── */
+async function loadDB() {
+  try {
+    const data = await api('/load');
+    if (!data) return;
+
+    // 1. Update Text Content
+    if (data.content) {
+      Object.keys(data.content).forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = data.content[id];
+        // Handle Social Links specifically if they are in content
+        if(id.startsWith('social') && el.tagName === 'A') el.href = data.content[id];
+      });
+    }
+
+    // 2. Update Media (Images/Videos)
+    if (data.media) {
+      Object.keys(data.media).forEach(slot => {
+        applyMedia(slot, data.media[slot]);
+      });
+    }
+
+    renderProjects(data.projects || []);
+    renderBlog(data.blog || []);
+  } catch(e) { console.error("Load failed", e); }
+}
+
+function applyMedia(slotId, mediaObj) {
+  const container = document.getElementById(slotId);
+  if (!container || !mediaObj.url) return;
+
+  const isVideo = mediaObj.type === 'video' || mediaObj.url.match(/\.(mp4|webm|mov)$/i);
+  container.innerHTML = isVideo 
+    ? `<video src="${mediaObj.url}" autoplay muted loop playsinline></video>`
+    : `<img src="${mediaObj.url}" alt="Jannix Sakaula">`;
+}
+
+function renderProjects(projs) {
+  const grid = document.getElementById('projectGrid');
+  if(!grid) return;
+  if(projs.length === 0) {
+    grid.innerHTML = '<p style="grid-column: span 12; opacity:0.5;">No projects published yet.</p>';
+    return;
+  }
+  grid.innerHTML = projs.map(p => `
+    <div class="proj-card">
+      <img src="${p.image}" class="proj-media" alt="${p.title}">
+      <div style="position:absolute; bottom:20px; left:20px; color:white; z-index:2;">
+        <p style="font-size:0.7rem; text-transform:uppercase; color:var(--gold);">${p.category}</p>
+        <h3 style="font-family:var(--fd);">${p.title}</h3>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderBlog(posts) {
+  const grid = document.getElementById('blogGrid');
+  if(!grid) return;
+  if(posts.length === 0) {
+    grid.innerHTML = '<p style="opacity:0.5;">Coming soon...</p>';
+    return;
+  }
+  grid.innerHTML = posts.map(p => `
+    <div class="blog-card">
+      <p style="font-size:0.7rem; color:var(--gold); margin-bottom:10px;">${p.date}</p>
+      <h3 style="font-family:var(--fd); margin-bottom:15px;">${p.title}</h3>
+      <p style="font-family:var(--fp); opacity:0.8;">${p.excerpt}</p>
+    </div>
+  `).join('');
+}
+
+/* ── INTERACTION LOGIC ── */
 window.addEventListener('scroll', () => {
-  const nav = document.getElementById('nav');
+  const nav = document.getElementById('navbar');
   const prog = document.getElementById('progressBar');
   const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
   const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-  const scrolled = (winScroll / height) * 100;
-  
-  prog.style.width = scrolled + "%";
+  prog.style.width = (winScroll / height) * 100 + "%";
   if (window.scrollY > 50) nav.classList.add('scrolled');
   else nav.classList.remove('scrolled');
 });
 
-function closeLightbox() {
-  document.getElementById('lightbox').classList.remove('open');
-}
-
-/* ── DATA FETCHING ── */
-let blogPosts = [];
-
-async function loadDB() {
-  const d = await api('/api/load');
-  if (!d || d.error) {
-    console.log("Using local fallbacks.");
-    return;
-  }
-
-  // 1. Text Content
-  if (d.content) {
-    Object.keys(d.content).forEach(key => {
-      const el = document.getElementById(key);
-      if (el) el.innerHTML = d.content[key];
-    });
-  }
-
-  // 2. Media (Images/Videos)
-  if (d.media) {
-    d.media.forEach(item => {
-      applyMedia(item.slot_key, item.url, item.type);
-    });
-  }
-
-  // 3. Blog
-  if (d.blog) {
-    blogPosts = d.blog;
-    renderBlog();
-  }
-}
-
-function applyMedia(slot, url, type) {
-  const container = document.getElementById(slot);
-  if (!container) return;
-
-  if (slot === 'heroMedia') {
-    container.innerHTML = type === 'video' 
-      ? `<video src="${url}" autoplay loop muted playsinline></video>`
-      : `<img src="${url}" alt="Hero Background">`;
-  } else if (slot === 'aboutImg') {
-    container.innerHTML = `<img src="${url}" class="about-img-el" alt="Jannix Sakaula">`;
-  }
-}
-
-function renderBlog() {
-  const grid = document.getElementById('blogGrid');
-  if (!grid) return;
-  
-  if (blogPosts.length === 0) {
-    grid.innerHTML = '<p style="font-style:italic; opacity:0.5;">New stories coming soon.</p>';
-    return;
-  }
-
-  grid.innerHTML = blogPosts.slice(0, 3).map(post => `
-    <article class="blog-card">
-      <p style="font-family:var(--fd); font-size:0.6rem; color:var(--gold); margin-bottom:10px;">
-        ${new Date(post.created_at).toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'})}
-      </p>
-      <h3 class="blog-title">${post.title}</h3>
-      <p style="font-family:var(--fp); color:var(--text-mid); line-height:1.7;">${post.excerpt || post.content.substring(0, 150) + '...'}</p>
-    </article>
-  `).join('');
-}
-
-/* ── FORMS ── */
-async function handleFormSubmit(e) {
-  e.preventDefault();
-  const btn = document.getElementById('submitBtn');
-  const status = document.getElementById('formStatus');
-  const form = e.target;
-  
-  btn.innerText = "Sending...";
-  btn.disabled = true;
-
-  const data = {
-    name: form.name.value,
-    email: form.email.value,
-    message: form.message.value
-  };
-
-  const res = await api('/api/contact', 'POST', data);
-  
-  status.style.display = "block";
-  if (res.ok) {
-    status.style.color = "green";
-    status.innerText = "Message sent successfully!";
-    form.reset();
-  } else {
-    status.style.color = "red";
-    status.innerText = "Error sending message. Please try again.";
-  }
-
-  btn.innerText = "Send Message";
-  btn.disabled = false;
-}
-
-/* ── START ── */
 document.addEventListener('DOMContentLoaded', loadDB);
-
 </script>
+
 </body>
 </html>
